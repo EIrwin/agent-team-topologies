@@ -9,7 +9,6 @@ remote_theme: just-the-docs/just-the-docs
 
 color_scheme: agent-topologies
 
-logo: "/assets/images/logo.svg"
 favicon_ico: "/assets/images/favicon.svg"
 
 search_enabled: true
