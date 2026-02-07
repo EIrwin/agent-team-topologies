@@ -1,6 +1,7 @@
 ---
 title: Competing Hypotheses
 parent: Topologies
+has_children: true
 nav_order: 3
 ---
 

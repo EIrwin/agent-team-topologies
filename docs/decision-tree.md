@@ -63,7 +63,8 @@ flowchart TD
 
 ## Pattern G: Quality-Gated Delivery (composable overlay)
 
-Pattern G is not a standalone topology -- it layers on top of any other pattern. Apply it when you need enforced "Definition of Done" criteria.
+{: .important }
+> Pattern G is not a standalone topology -- it layers on top of any other pattern. Apply it when you need enforced "Definition of Done" criteria.
 
 ```mermaid
 graph LR

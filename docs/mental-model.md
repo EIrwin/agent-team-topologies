@@ -2,6 +2,7 @@
 title: Mental Model
 parent: Guides
 nav_order: 1
+has_toc: true
 ---
 
 # Mental Model: Agent Teams in Claude Code
@@ -79,7 +80,10 @@ If the task is one-shot and expensive to get wrong (security changes, migrations
 
 ### 4. Cost test
 
-Agent teams can use ~7x more tokens than standard sessions. Mitigate with:
+{: .warning }
+> Agent teams can use ~7x more tokens than standard sessions.
+
+Mitigate with:
 - Small teams (2-4 teammates)
 - Sonnet for teammates (not Opus)
 - Focused spawn prompts

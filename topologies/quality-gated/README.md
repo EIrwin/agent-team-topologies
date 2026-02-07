@@ -1,6 +1,7 @@
 ---
 title: Quality-Gated
 parent: Topologies
+has_children: true
 nav_order: 7
 ---
 

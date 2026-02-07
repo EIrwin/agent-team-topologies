@@ -1,6 +1,7 @@
 ---
 title: Risky Refactor
 parent: Topologies
+has_children: true
 nav_order: 5
 ---
 

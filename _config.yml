@@ -59,6 +59,7 @@ footer_content: >-
   MIT Licensed. Built with <a href="https://just-the-docs.com">Just the Docs</a>.
 
 exclude:
+  - README.md
   - CLAUDE.md
   - cards.md
   - topologies.md

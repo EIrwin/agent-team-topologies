@@ -6,13 +6,14 @@ nav_order: 1
 
 # Agent Team Topologies
 
-**Proven patterns for orchestrating multi-agent teams in Claude Code.**
+**Stop guessing how to structure your multi-agent teams in Claude Code.**
 {: .fs-6 .fw-300 }
 
-8 primitive topology patterns that compose, combine, and nest. Copy-paste spawn prompts and a ready-to-use `.claude/` config directory. Pick a pattern, compose it with others, and go.
+8 composable topology patterns with copy-paste spawn prompts and a ready-to-use `.claude/` config directory. Pick a pattern, combine it with others, and ship.
 {: .fs-5 .fw-300 }
 
-[Get Started](#quick-start){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Find Your Topology](docs/decision-tree.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Quick Start](#quick-start){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/eirwin/agent-team-topologies){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -62,7 +63,7 @@ flowchart TD
 
 ## Quick Start
 
-{: .note }
+{: .highlight }
 > **Copy the `.claude/` directory into your project** to get pre-built agents, a topology chooser skill, and quality gate hooks:
 >
 > ```bash
@@ -72,9 +73,9 @@ flowchart TD
 > ```
 
 You get:
-- **6 agent definitions** — explorer, security reviewer, performance reviewer, test reviewer, architect, implementer
-- **`/topology` skill** — interactive chooser that recommends a topology based on your goal
-- **Hook scripts** — quality gates and idle summary enforcement
+- **6 agent definitions** -- explorer, security reviewer, performance reviewer, test reviewer, architect, implementer
+- **`/topology` skill** -- interactive chooser that recommends a topology based on your goal
+- **Hook scripts** -- quality gates and idle summary enforcement
 
 ---
 
@@ -94,7 +95,7 @@ You get:
 **$$** Low |  **$$$** Medium | **$$$$** High | **+$** Additive overlay
 {: .fs-2 .text-grey-dk-000 }
 
-{: .note }
+{: .important }
 > **Topologies are primitives, not monoliths.** Any teammate slot can itself become a topology -- a reviewer in Feature Pod can spawn a Review Board, an explorer can fan out sub-explorers. See [Composing Topologies](docs/composing-topologies.md) for recipes.
 
 ---
@@ -105,10 +106,10 @@ You get:
 |----------|---------------|
 | [Mental Model](docs/mental-model.md) | Teams vs subagents, core concepts, selection heuristics |
 | [Decision Tree](docs/decision-tree.md) | Expanded flowchart for picking the right topology |
+| [Composing Topologies](docs/composing-topologies.md) | Recipes for chaining, nesting, and combining patterns |
 | [Anti-Patterns](docs/anti-patterns.md) | 8 things NOT to do with agent teams |
 | [Cost Guide](docs/cost-guide.md) | Token economics by topology, cost reduction strategies |
 | [Best Practices](docs/best-practices.md) | Operational guidance for running agent teams |
-| [Composing Topologies](docs/composing-topologies.md) | Recipes for chaining, nesting, and combining patterns |
 
 ---
 

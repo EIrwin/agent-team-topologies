@@ -1,7 +1,8 @@
 ---
 title: Composing Topologies
 parent: Guides
-nav_order: 6
+nav_order: 3
+has_toc: true
 ---
 
 # Composing Topologies
@@ -224,7 +225,8 @@ Implementer executes the plan; reviewer validates against it.
 
 ## When NOT to compose
 
-Composition adds coordination overhead. Keep it simple unless complexity is justified:
+{: .warning }
+> Composition adds coordination overhead. Keep it simple unless complexity is justified.
 
 - **If the inner topology would only have 1 teammate**, use a subagent instead of a full topology. A "Review Board" with one reviewer is just a reviewer.
 - **If phases don't genuinely need different team shapes**, run one topology end-to-end. Don't pipeline just because you can.
