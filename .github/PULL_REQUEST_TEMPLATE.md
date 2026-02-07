@@ -15,5 +15,5 @@
 - [ ] All relative links work and point to the correct files
 - [ ] Follows the established template structure (pattern card, example format, etc.)
 - [ ] Examples are **real walkthroughs**, not hypothetical templates
-- [ ] New topology includes an entry in `topologies/README.md`
+- [ ] New topology includes an entry in `topologies/index.md`
 - [ ] Agent/hook changes were tested locally with Claude Code

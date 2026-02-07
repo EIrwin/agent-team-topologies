@@ -73,7 +73,7 @@ Copy-paste this to get started:
 [A ready-to-use prompt tailored to the topology, using the spawn prompts from the pattern cards]
 
 ### Pattern Card
-Read the full pattern: [topologies/<name>/README.md]
+Read the full pattern: [topologies/<name>/index.md]
 
 ### Alternatives
 If this doesn't feel right:
@@ -81,7 +81,7 @@ If this doesn't feel right:
 - **[Alternative topology]** — better if [condition]
 ```
 
-For the spawn prompt, use the prompt template from the corresponding topology pattern card in `topologies/<name>/README.md`.
+For the spawn prompt, use the prompt template from the corresponding topology pattern card in `topologies/<name>/index.md`.
 
 If quality gates were requested, add a section:
 
@@ -91,7 +91,7 @@ Layer Quality-Gated Delivery on top. Install hooks:
 - `.claude/hooks/quality-gate.sh` — blocks task completion if tests/lint fail
 - `.claude/hooks/idle-summary.sh` — requires structured summary before idle
 
-See: [topologies/quality-gated/README.md]
+See: [topologies/quality-gated/index.md]
 ```
 
 ### Step 4: Offer to Refine

@@ -48,8 +48,8 @@ topologies/            8 topology pattern cards with spawn prompts and examples
 
 ## For agents working in this repo
 
-- Pattern cards live in `topologies/<pattern-name>/README.md`. Each card follows a consistent structure: when to use, team shape, spawn prompt, and example walkthrough.
+- Pattern cards live in `topologies/<pattern-name>/index.md`. Each card follows a consistent structure: when to use, team shape, spawn prompt, and example walkthrough.
 - The `/topology` skill in `.claude/skills/topology/` is the interactive entry point. It reads the decision tree and guides users to the right pattern.
 - Docs in `docs/` are conceptual guides, not pattern cards. Keep them topology-agnostic.
 - Examples must be **real walkthroughs**, not hypothetical templates. Every example should include what actually happened, what went wrong, and concrete metrics (duration, tokens, cost).
-- When adding a new topology, create a directory under `topologies/` and add an entry to `topologies/README.md`.
+- When adding a new topology, create a directory under `topologies/` and add an entry to `topologies/index.md`.
