@@ -1,0 +1,11 @@
+# OS
+.DS_Store
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Source artifacts (input files used to generate this repo)
+agent_team_topologies.pdf
+cards.md
+topologies.md
+harness-mcp.log
