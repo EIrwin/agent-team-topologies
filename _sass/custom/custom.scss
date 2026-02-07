@@ -1,5 +1,28 @@
 // Agent Topologies custom styles
 
+// Narrower sidebar — default is 16.5rem
+.side-bar {
+  width: 12rem;
+
+  @media (min-width: 50rem) {
+    width: 12rem;
+  }
+
+  @media (min-width: 66rem) {
+    width: 12rem;
+  }
+}
+
+.main {
+  @media (min-width: 50rem) {
+    margin-left: 12rem;
+  }
+
+  @media (min-width: 66rem) {
+    margin-left: 12rem;
+  }
+}
+
 // Typography - Inter font
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
