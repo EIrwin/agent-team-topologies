@@ -9,6 +9,7 @@ nav_order: 2
 > Parallel code review through distinct specialist lenses, synthesized into one verdict.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | PR review, refactor review, pre-merge quality checks |

@@ -8,6 +8,7 @@ nav_order: 3
 > Multiple investigators propose, test, and disprove theories like a scientific debate.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | Ambiguous bugs, flaky tests, architectural decisions, root cause analysis |

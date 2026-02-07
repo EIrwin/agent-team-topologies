@@ -8,6 +8,7 @@ nav_order: 5
 > High-risk changes gated through plan approval, sequential execution, and independent review.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | Security-sensitive changes, large refactors, database migrations, core architecture changes |

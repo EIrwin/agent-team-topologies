@@ -9,6 +9,7 @@ nav_order: 8
 > Many workers self-claim from a shared pool of small, independent tasks.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | Bulk processing, many small fixes, ticket triage, doc extraction, independent work items |

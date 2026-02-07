@@ -8,6 +8,7 @@ nav_order: 7
 > Hooks as guardrails -- enforce completion standards before work is accepted.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | Enforcing "Definition of Done", preventing premature completion, automated quality checks |

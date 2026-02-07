@@ -9,6 +9,7 @@ nav_order: 1
 > Fan-out discovery across a codebase, then synthesize findings into a unified picture.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | Fast discovery, codebase mapping, architecture understanding |

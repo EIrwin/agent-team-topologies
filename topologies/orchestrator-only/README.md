@@ -8,6 +8,7 @@ nav_order: 6
 > The lead coordinates and delegates exclusively -- it never touches code.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | Complex multi-workstream projects, large task decomposition, sustained parallel execution |

@@ -9,6 +9,7 @@ nav_order: 4
 > Cross-layer feature delivery with dedicated owners per stack layer, coordinated by contract.
 
 ## At a Glance
+
 | Field | Value |
 |-------|-------|
 | Best For | End-to-end feature implementation spanning frontend, backend, and tests |
