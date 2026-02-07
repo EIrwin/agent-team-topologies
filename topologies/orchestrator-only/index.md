@@ -14,13 +14,13 @@ nav_order: 6
 |-------|-------|
 | Best For | Complex multi-workstream projects, large task decomposition, sustained parallel execution |
 | Team Shape | Lead (delegate mode) + 2-5 Workers |
-| Cost Profile | $$$$ -- high (many parallel workers + lead overhead) |
+| Cost Profile | High (many parallel workers + lead overhead) |
 | Complexity | High |
 | Parallelism | High |
 
 High Complexity
 {: .label .label-red }
-$$$$ Cost
+High Cost
 {: .label .label-red }
 High Parallelism
 {: .label .label-blue }

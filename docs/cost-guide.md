@@ -13,16 +13,16 @@ Agent teams can use ~7x more tokens than standard single-agent sessions. This gu
 
 | Topology | Cost | Why |
 |---|---|---|
-| A. Parallel Explorers | $$ | 2-4 short-lived workers, read-only, no coordination overhead |
-| B. Review Board | $$ | Small team, focused review scope, structured output |
-| C. Competing Hypotheses | $$$ | Multiple solvers doing deep investigation + reconciliation |
-| D. Feature Pod | $$$ | 3-4 workers with sustained execution + coordination |
-| E. Risky Refactor | $$ | Small team, plan approval gate prevents wasted execution |
-| F. Orchestrator-Only | $$$$ | Lead + multiple workers; lead overhead is pure coordination cost |
-| G. Quality-Gated | + (additive) | Hooks add cost per gate check; overlays on base topology cost |
-| H. Task Queue | $$$$ | Many workers over extended period; highest total token burn |
+| A. Parallel Explorers | Low | 2-4 short-lived workers, read-only, no coordination overhead |
+| B. Review Board | Low | Small team, focused review scope, structured output |
+| C. Competing Hypotheses | Medium | Multiple solvers doing deep investigation + reconciliation |
+| D. Feature Pod | Medium | 3-4 workers with sustained execution + coordination |
+| E. Risky Refactor | Low | Small team, plan approval gate prevents wasted execution |
+| F. Orchestrator-Only | High | Lead + multiple workers; lead overhead is pure coordination cost |
+| G. Quality-Gated | Overlay | Hooks add cost per gate check; overlays on base topology cost |
+| H. Task Queue | High | Many workers over extended period; highest total token burn |
 
-**Legend:** $ = ~1x single agent, $$ = ~2-3x, $$$ = ~4-5x, $$$$ = ~6-7x+
+**Legend:** Low = ~2-3x single agent, Medium = ~4-5x, High = ~6-7x+
 
 ## 8 cost reduction strategies
 

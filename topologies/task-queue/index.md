@@ -14,13 +14,13 @@ nav_order: 8
 |-------|-------|
 | Best For | Bulk processing, many small fixes, ticket triage, doc extraction, independent work items |
 | Team Shape | Lead (aggregator) + 3-8 Workers |
-| Cost Profile | $$$$ -- high (many parallel workers) |
+| Cost Profile | High (many parallel workers) |
 | Complexity | Low |
 | Parallelism | Very High |
 
 Low Complexity
 {: .label .label-green }
-$$$$ Cost
+High Cost
 {: .label .label-red }
 Very High Parallelism
 {: .label .label-blue }

@@ -14,13 +14,13 @@ nav_order: 7
 |-------|-------|
 | Best For | Enforcing "Definition of Done", preventing premature completion, automated quality checks |
 | Team Shape | Any topology + gate hooks |
-| Cost Profile | +$ -- marginal cost on top of the base topology |
+| Cost Profile | Overlay (marginal cost on top of the base topology) |
 | Complexity | Low-Medium |
 | Parallelism | Varies (inherits from base topology) |
 
 Low-Medium Complexity
 {: .label .label-green }
-+$ Cost
+Overlay Cost
 {: .label .label-purple }
 Composable
 {: .label .label-blue }

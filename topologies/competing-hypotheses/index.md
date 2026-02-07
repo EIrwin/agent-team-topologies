@@ -14,13 +14,13 @@ nav_order: 3
 |-------|-------|
 | Best For | Ambiguous bugs, flaky tests, architectural decisions, root cause analysis |
 | Team Shape | Lead (judge/arbiter) + 3-6 Investigators |
-| Cost Profile | $$$ -- higher (debate rounds consume tokens) |
+| Cost Profile | Medium (debate rounds consume tokens) |
 | Complexity | Medium |
 | Parallelism | Medium |
 
 Medium Complexity
 {: .label .label-yellow }
-$$$ Cost
+Medium Cost
 {: .label .label-yellow }
 Medium Parallelism
 {: .label .label-blue }

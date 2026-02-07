@@ -14,13 +14,13 @@ nav_order: 5
 |-------|-------|
 | Best For | Security-sensitive changes, large refactors, database migrations, core architecture changes |
 | Team Shape | Lead (approver) + Architect + Implementer + Reviewer |
-| Cost Profile | $$ -- moderate (sequential reduces parallel burn) |
+| Cost Profile | Low (sequential reduces parallel burn) |
 | Complexity | Medium-High |
 | Parallelism | Low (sequential by design) |
 
 Medium-High Complexity
 {: .label .label-yellow }
-$$ Cost
+Low Cost
 {: .label .label-green }
 Low Parallelism
 {: .label .label-red }

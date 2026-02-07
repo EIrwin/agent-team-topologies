@@ -14,14 +14,14 @@ nav_order: 1
 |-------|-------|
 | Best For | Fast discovery, codebase mapping, architecture understanding |
 | Team Shape | Lead (synthesizer) + 2-4 Explorers |
-| Cost Profile | $$ -- moderate (small team, read-heavy) |
+| Cost Profile | Low (small team, read-heavy) |
 | Complexity | Low |
 | Parallelism | High |
 
 Low Complexity
 {: .label .label-green }
-$$ Cost
-{: .label .label-yellow }
+Low Cost
+{: .label .label-green }
 High Parallelism
 {: .label .label-blue }
 

@@ -64,17 +64,14 @@ flowchart TD
 
 | Pattern | Best For | Cost |
 |---------|----------|------|
-| [Parallel Explorers](topologies/parallel-explorers/) | Discovery, research, codebase mapping | **$$** |
-| [Review Board](topologies/review-board/) | Code review with distinct lenses | **$$** |
-| [Competing Hypotheses](topologies/competing-hypotheses/) | Ambiguous bugs, architectural decisions | **$$$** |
-| [Feature Pod](topologies/feature-pod/) | Cross-layer feature delivery | **$$$** |
-| [Risky Refactor](topologies/risky-refactor/) | High-risk changes needing plan approval | **$$** |
-| [Orchestrator-Only](topologies/orchestrator-only/) | Pure coordination, lead never codes | **$$$$** |
-| [Quality-Gated](topologies/quality-gated/) | Enforcing completion standards (composable) | **+$** |
-| [Task Queue](topologies/task-queue/) | Many small independent tasks | **$$$$** |
-
-**$$** Low |  **$$$** Medium | **$$$$** High | **+$** Additive overlay
-{: .fs-2 .text-grey-dk-000 }
+| [Parallel Explorers](topologies/parallel-explorers/) | Discovery, research, codebase mapping | Low |
+| [Review Board](topologies/review-board/) | Code review with distinct lenses | Low |
+| [Competing Hypotheses](topologies/competing-hypotheses/) | Ambiguous bugs, architectural decisions | Medium |
+| [Feature Pod](topologies/feature-pod/) | Cross-layer feature delivery | Medium |
+| [Risky Refactor](topologies/risky-refactor/) | High-risk changes needing plan approval | Low |
+| [Orchestrator-Only](topologies/orchestrator-only/) | Pure coordination, lead never codes | High |
+| [Quality-Gated](topologies/quality-gated/) | Enforcing completion standards (composable) | Overlay |
+| [Task Queue](topologies/task-queue/) | Many small independent tasks | High |
 
 {: .important }
 > **Topologies are primitives, not monoliths.** Any teammate slot can itself become a topology -- a reviewer in Feature Pod can spawn a Review Board, an explorer can fan out sub-explorers. See [Composing Topologies](docs/composing-topologies.md) for recipes.

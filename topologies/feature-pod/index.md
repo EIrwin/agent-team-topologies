@@ -14,13 +14,13 @@ nav_order: 4
 |-------|-------|
 | Best For | End-to-end feature implementation spanning frontend, backend, and tests |
 | Team Shape | Lead (orchestrator) + Frontend + Backend + QA |
-| Cost Profile | $$$ -- higher (multiple writers, longer sessions) |
+| Cost Profile | Medium (multiple writers, longer sessions) |
 | Complexity | Medium |
 | Parallelism | High |
 
 Medium Complexity
 {: .label .label-yellow }
-$$$ Cost
+Medium Cost
 {: .label .label-yellow }
 High Parallelism
 {: .label .label-blue }

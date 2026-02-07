@@ -14,14 +14,14 @@ nav_order: 2
 |-------|-------|
 | Best For | PR review, refactor review, pre-merge quality checks |
 | Team Shape | Lead (editor-in-chief) + 3 Reviewers |
-| Cost Profile | $$ -- moderate (small team, read-heavy) |
+| Cost Profile | Low (small team, read-heavy) |
 | Complexity | Low |
 | Parallelism | High |
 
 Low Complexity
 {: .label .label-green }
-$$ Cost
-{: .label .label-yellow }
+Low Cost
+{: .label .label-green }
 High Parallelism
 {: .label .label-blue }
 
