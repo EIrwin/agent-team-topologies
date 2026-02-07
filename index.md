@@ -52,14 +52,10 @@ flowchart TD
     G[Quality-Gated]
     G -.->|composable: add to any| Start
 
-    style A fill:#1a73e8,color:#fff
-    style B fill:#1a73e8,color:#fff
-    style C fill:#1a73e8,color:#fff
-    style D fill:#1a73e8,color:#fff
-    style E fill:#1a73e8,color:#fff
-    style F fill:#1a73e8,color:#fff
-    style G fill:#7c4dff,color:#fff
-    style H fill:#1a73e8,color:#fff
+    classDef topology fill:#1a73e8,color:#fff,stroke:#1565c0
+    classDef overlay fill:#7c4dff,color:#fff,stroke:#651fff
+    class A,B,C,D,E,F,H topology
+    class G overlay
 ```
 
 ---
