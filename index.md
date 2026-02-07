@@ -6,14 +6,17 @@ nav_order: 1
 
 # Agent Team Topologies
 
-**Stop guessing how to structure your multi-agent teams in Claude Code.**
+**A quick-reference model for structuring multi-agent teams in Claude Code.**
 {: .fs-6 .fw-300 }
 
-8 composable topology patterns with copy-paste spawn prompts and a ready-to-use `.claude/` config directory. Pick a pattern, combine it with others, and ship.
+8 composable topology patterns — a nod to [Team Topologies](https://teamtopologies.com/) thinking, applied to how work flows through agent teams. Browse the patterns, find what fits, and adapt.
 {: .fs-5 .fw-300 }
 
+{: .warning }
+> **Agent teams are experimental.** They're disabled by default in Claude Code. Enable them by setting `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` to `1` in your settings or environment. See the [official agent teams documentation](https://docs.anthropic.com/en/docs/claude-code/agent-teams) for setup and known limitations.
+
 [Find Your Topology](docs/decision-tree.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Quick Start](#quick-start){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Getting Started](docs/getting-started.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/eirwin/agent-team-topologies){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -61,24 +64,6 @@ flowchart TD
 
 ---
 
-## Quick Start
-
-{: .highlight }
-> **Copy the `.claude/` directory into your project** to get pre-built agents, a topology chooser skill, and quality gate hooks:
->
-> ```bash
-> # Clone and copy configs into your project
-> git clone https://github.com/eirwin/agent-team-topologies.git
-> cp -r agent-team-topologies/.claude/ your-project/.claude/
-> ```
-
-You get:
-- **6 agent definitions** -- explorer, security reviewer, performance reviewer, test reviewer, architect, implementer
-- **`/topology` skill** -- interactive chooser that recommends a topology based on your goal
-- **Hook scripts** -- quality gates and idle summary enforcement
-
----
-
 ## The 8 Topologies
 
 | Pattern | Best For | Cost |
@@ -104,34 +89,13 @@ You get:
 
 | Document | What's Inside |
 |----------|---------------|
+| [Getting Started](docs/getting-started.md) | Enable agent teams, install configs, run your first topology |
 | [Mental Model](docs/mental-model.md) | Teams vs subagents, core concepts, selection heuristics |
 | [Decision Tree](docs/decision-tree.md) | Expanded flowchart for picking the right topology |
 | [Composing Topologies](docs/composing-topologies.md) | Recipes for chaining, nesting, and combining patterns |
 | [Anti-Patterns](docs/anti-patterns.md) | 8 things NOT to do with agent teams |
 | [Cost Guide](docs/cost-guide.md) | Token economics by topology, cost reduction strategies |
 | [Best Practices](docs/best-practices.md) | Operational guidance for running agent teams |
-
----
-
-## What's in `.claude/`
-
-```
-.claude/
-├── agents/
-│   ├── explorer.md          # Read-only codebase discovery
-│   ├── security-reviewer.md # OWASP-informed security review
-│   ├── perf-reviewer.md     # Performance analysis
-│   ├── test-reviewer.md     # Test coverage & correctness
-│   ├── architect.md         # Plan-mode architecture design
-│   └── implementer.md       # Focused code execution
-├── skills/
-│   └── topology/
-│       └── SKILL.md         # /topology interactive chooser
-└── hooks/
-    ├── quality-gate.sh      # Block task completion if tests/lint fail
-    ├── idle-summary.sh      # Require structured summary before idle
-    └── README.md            # Hook installation guide
-```
 
 ---
 

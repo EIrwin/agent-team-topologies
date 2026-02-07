@@ -6,10 +6,11 @@ nav_order: 3
 
 # Guides
 
-Conceptual guides for understanding and operating agent teams effectively.
+Guides for getting started with agent teams and understanding the patterns behind them.
 
 | Document | What's Inside |
 |----------|---------------|
+| [Getting Started](getting-started.md) | Enable agent teams, install configs, run your first topology |
 | [Mental Model](mental-model.md) | Teams vs subagents, core concepts, selection heuristics |
 | [Decision Tree](decision-tree.md) | Expanded flowchart for picking the right topology |
 | [Composing Topologies](composing-topologies.md) | Recipes for chaining, nesting, and combining patterns |

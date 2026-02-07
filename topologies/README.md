@@ -6,7 +6,7 @@ nav_order: 2
 
 # Agent Team Topologies
 
-This directory contains **8 topology pattern cards** -- reusable team configurations for Claude Code agent teams. Each pattern describes a proven way to structure multi-agent collaboration for a specific class of problem.
+This directory contains **8 topology pattern cards** -- reusable team configurations for Claude Code agent teams. Each pattern describes a reusable approach to structuring multi-agent collaboration for a specific class of problem.
 
 Pick the topology that matches your work shape, then use the spawn prompt inside to get started immediately.
 
