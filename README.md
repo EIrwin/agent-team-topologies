@@ -160,9 +160,9 @@ You get:
           └──┬───┘
        ┌──┬──┼──┬──┐
        ▼  ▼  ▼  ▼  ▼
-      ┌──┬──┬──┬──┐
-      │D1│D2│D3│D4│   Workers self-claim tasks
-      └──┴──┴──┴──┘   Lead never touches code
+      ┌──┬──┬──┬──┬──┐
+      │D1│D2│D3│D4│D5│   Workers self-claim tasks
+      └──┴──┴──┴──┴──┘   Lead never touches code
 ```
 
 **Pure coordination lead.** Lead operates in delegate mode — spawns teammates, manages tasks, synthesizes results, but never writes code. Workers self-claim from the task list.
@@ -193,14 +193,14 @@ You get:
 ### H: Task Queue
 
 ```
-            ┌──────┐
-            │ Lead │        Aggregator
-            └──┬───┘
-      ┌────────┼────────┐
-      ▼   ▼   ▼   ▼   ▼
-     ●   ●   ●   ●   ●    Workers self-claim from
-     ●   ●   ●            shared task queue
-     Workers grab next unblocked task
+          ┌──────┐
+          │ Lead │         Aggregator
+          └──┬───┘
+    ┌──┬──┬──┼──┬──┬──┐
+    ▼  ▼  ▼  ▼  ▼  ▼  ▼
+   ┌──┬──┬──┬──┬──┬──┬──┐
+   │W1│W2│W3│W4│W5│W6│W7│  Workers self-claim from
+   └──┴──┴──┴──┴──┴──┴──┘  shared task queue
 ```
 
 **High-throughput parallel processing.** Many workers self-claim from a shared task list. Best for lots of independent, small work items: ticket triage, doc extraction, bulk fixes, migration tasks.

@@ -1,71 +1,131 @@
-# Example: Multi-Lens Review of an Auth Middleware Rewrite
+# Review Board: OAuth2 Authentication PR Review
 
 ## Scenario
+A Rails 7 application called FieldOps has used cookie-based session authentication since launch. A contractor submitted PR #342: "Add OAuth2 authentication via Google and GitHub," which adds a second auth path alongside existing sessions. The PR touches 23 files across auth controllers, session management, user model callbacks, and middleware configuration. It introduces the `omniauth` and `omniauth-rails_csrf_protection` gems, adds OAuth token storage, and modifies the existing `SessionsController`.
 
-A teammate submitted a PR rewriting the authentication middleware from a custom JWT implementation to using Passport.js with multiple strategy support (local, OAuth, API key). The PR touches 34 files: the middleware itself, 8 route files that change how they access `req.user`, a new session store configuration, and updated tests. The change is security-critical and performance-sensitive -- auth middleware runs on every request.
+This is a high-stakes change. Auth bugs mean either locked-out users or unauthorized access. The contractor's code works in manual testing, but the team wants a thorough review before merging.
 
 ## Why This Topology
-
-No single reviewer can hold security implications, performance characteristics, and test correctness in mind simultaneously across 34 files. The change is high-stakes (auth middleware = every request), making thorough review essential. Three specialist reviewers working in parallel will catch issues that a single sequential review would miss due to fatigue or tunnel vision.
+Auth changes need scrutiny from multiple angles that a single reviewer tends to blur together. A security expert looking at token storage has a different mindset than a performance expert checking query patterns or a test expert checking edge case coverage. The Review Board lets each lens get full attention without the "I already spent 20 minutes reviewing, it's probably fine" fatigue that kills thorough manual reviews.
 
 ## Setup
 
+### Team Creation
 ```text
-Create an agent team to review PR #287 -- auth middleware rewrite to Passport.js.
+Create an agent team to review PR #342 which adds OAuth2 authentication.
 Spawn three reviewers:
-- Security reviewer: check for auth bypass paths, session fixation, token
-  handling, CSRF protection, and OAuth state parameter validation. Verify
-  that all protected routes still enforce authentication.
-- Performance reviewer: check for unnecessary middleware overhead, session
-  store latency, strategy selection cost, and whether the change introduces
-  any per-request database queries. Compare against the previous implementation.
-- Test reviewer: verify test coverage for all auth strategies, check edge
-  cases (expired tokens, revoked sessions, concurrent logins), and ensure
-  integration tests cover the actual middleware chain, not just unit tests
-  with mocks.
-Each reviewer: produce findings as must-fix / should-fix / nice-to-have
-with file paths, line numbers, and evidence.
-Then synthesize into one review comment for the PR.
+- Security reviewer: focus on token storage, session fixation, CSRF protection,
+  OAuth state parameter validation, scope of permissions requested, and any
+  data exposure risks. Check for OWASP auth guidelines compliance.
+- Performance reviewer: focus on database query efficiency during token refresh,
+  N+1 queries on user lookup, middleware overhead on every request, and
+  caching strategy for OAuth tokens.
+- Test reviewer: focus on test coverage gaps, missing edge cases (expired
+  tokens, revoked permissions, concurrent sessions, account linking conflicts),
+  and assertion quality.
+Each reviewer should produce findings as: Finding / Severity (must-fix,
+should-fix, nice-to-have) / Evidence (file + line) / Suggested fix.
+Then synthesize into one unified review comment.
 ```
 
-**Team:** Lead + 3 Reviewers
-**Estimated duration:** ~10 minutes
+### Task Breakdown
+| Task | Owner | Deliverable |
+|------|-------|-------------|
+| Review for security implications | Security reviewer | Structured findings report |
+| Review for performance impact | Performance reviewer | Structured findings report |
+| Review for test coverage and correctness | Test reviewer | Structured findings report |
+| Synthesize into unified review | Lead | Prioritized review comment |
 
 ## What Happened
 
-**Security reviewer** found 3 issues:
-1. **Must-fix:** The OAuth callback route did not validate the `state` parameter, leaving it vulnerable to CSRF attacks during the OAuth flow. The old implementation had a custom state check that was not ported to the Passport strategy configuration. (`src/middleware/oauth-callback.ts:47`)
-2. **Must-fix:** API key authentication fell through to the next strategy on failure instead of returning 401 immediately. This meant an invalid API key would silently try session auth, potentially granting access with stale session cookies. (`src/strategies/api-key.ts:23`)
-3. **Should-fix:** The `deserializeUser` callback did not check whether the user account was disabled. A disabled user with an existing session could continue making requests until the session expired. (`src/config/passport.ts:34`)
+### [0:00] Reviewers begin parallel analysis
+All three reviewers started reading the PR diff simultaneously. Each focused on their assigned lens from the first file they opened.
 
-**Performance reviewer** found 2 issues:
-1. **Must-fix:** The session store was configured with the default in-memory store, not the Redis store used in production. In production this would mean sessions are not shared across server instances and would be lost on restart. (`src/config/session.ts:12`)
-2. **Nice-to-have:** Passport's `initialize()` middleware was being applied twice -- once at the app level and once inside the auth router. The duplication has negligible performance impact but adds unnecessary overhead. (`src/app.ts:45`, `src/routes/auth.ts:8`)
+### [0:03] Security reviewer finds token storage vulnerability
+The security reviewer flagged the first must-fix within three minutes:
 
-**Test reviewer** found 2 issues:
-1. **Should-fix:** No integration tests for the strategy fallback chain. Unit tests mock each strategy independently, but nothing tests what happens when the first strategy fails and falls through to the next. This is exactly the scenario where the security reviewer's API key finding would surface. (`tests/auth/`)
-2. **Should-fix:** The OAuth flow tests mock the provider response but do not test the `state` parameter validation (which is currently missing anyway). Once the security fix lands, these tests need to cover the happy path and the CSRF rejection path. (`tests/auth/oauth.test.ts`)
+> **Finding 1 (must-fix):** OAuth access tokens are stored in `localStorage` via the frontend JavaScript in `app/javascript/controllers/oauth_controller.js:34`. This exposes tokens to XSS attacks. Any script injected into the page can read `localStorage` and exfiltrate tokens.
+>
+> **Evidence:** `localStorage.setItem('oauth_token', response.token)` at line 34.
+>
+> **Suggested fix:** Store OAuth tokens in `httpOnly` cookies set by the server. The frontend should never directly handle tokens. Move token storage to `OauthCallbacksController#create` and set a `httpOnly; Secure; SameSite=Strict` cookie.
 
-**Lead synthesis** produced a single review comment prioritizing the 3 must-fix items at the top (OAuth CSRF, API key fallthrough, session store config), followed by the 3 should-fix items. The synthesis noted that the security and test findings were linked -- the missing strategy fallback test would have caught the API key issue, and the missing OAuth state test would have caught the CSRF issue.
+The security reviewer continued and found a second critical issue:
+
+> **Finding 2 (must-fix):** The OAuth state parameter is generated but never validated on callback. `OauthCallbacksController#create` (line 18) extracts the token from the OAuth response but does not verify `params[:state]` against the value stored in the session. This allows CSRF attacks where an attacker can force a victim to link the attacker's OAuth account.
+>
+> **Evidence:** `app/controllers/oauth_callbacks_controller.rb:18` -- no `state` parameter check.
+>
+> **Suggested fix:** Add `validate_oauth_state!` before processing the callback. Compare `params[:state]` with `session[:oauth_state]` and reject mismatches with a 403.
+
+### [0:06] Performance reviewer identifies query inefficiency
+The performance reviewer found an N+1 pattern in the token refresh flow:
+
+> **Finding 1 (should-fix):** On every token refresh, the `OauthTokenRefreshMiddleware` (line 42) queries the database for the user, then queries again for their OAuth credentials, then queries again for their organization membership to check OAuth scope. These are three separate queries that run on every authenticated request when the token is within 5 minutes of expiry.
+>
+> **Evidence:** `app/middleware/oauth_token_refresh_middleware.rb:42-58` -- three sequential `find_by` calls.
+>
+> **Suggested fix:** Use a single joined query: `User.includes(:oauth_credentials, :organization_memberships).find_by(id: user_id)`. Better yet, cache the refresh check result in the session so it does not hit the database on every request.
+
+The performance reviewer also noted a less critical concern:
+
+> **Finding 2 (nice-to-have):** The `omniauth` middleware initializer loads and parses the OAuth configuration on every request (including unauthenticated ones). This adds ~2ms of overhead. Consider lazy-loading the OAuth strategy only when the OAuth routes are hit.
+
+### [0:09] Test reviewer flags missing edge cases
+The test reviewer analyzed the existing test files and the new specs added in the PR:
+
+> **Finding 1 (must-fix):** There are no tests for expired OAuth tokens. The `OauthTokenRefreshMiddleware` has a code path for when the refresh token itself has expired (line 67: `rescue OAuth2::Error`), which falls through to destroying the session. This path has zero test coverage and could silently log users out.
+>
+> **Evidence:** `spec/middleware/oauth_token_refresh_middleware_spec.rb` -- no test case for expired refresh tokens.
+>
+> **Suggested fix:** Add a spec that stubs an expired refresh token response and verifies the user is redirected to the login page with a flash message, not silently logged out.
+
+> **Finding 2 (should-fix):** No test for account linking conflicts. If a user signs up with email, then tries to OAuth with a Google account that has a different email, the PR's `OauthCallbacksController#create` will create a duplicate user record. There's no test for this, and the code has no guard against it.
+>
+> **Evidence:** `app/controllers/oauth_callbacks_controller.rb:25` -- `User.find_or_create_by(email: auth_hash['info']['email'])` does not check if the current session already has a logged-in user.
+
+> **Finding 3 (should-fix):** No tests for concurrent sessions. A user logged in via session auth on one browser and OAuth on another could have conflicting session states. The current session cleanup in `SessionsController#destroy` does not invalidate OAuth tokens.
+
+### [0:12] The CSRF overlap
+Both the security reviewer and the test reviewer independently flagged CSRF concerns. The security reviewer found the missing `state` parameter validation (a code-level vulnerability). The test reviewer found the absence of CSRF-related tests (a coverage gap). Both were valid findings, but they overlapped significantly.
+
+The lead noticed when collecting reports:
+
+> **Lead:** "Security and Test reviewers both flagged CSRF. I'm consolidating these: the security finding (missing state validation) is the must-fix. The test finding (no CSRF tests) becomes a sub-item: 'after fixing the state validation, add specs covering the CSRF attack vector.' Removing the duplicate from the test reviewer's list to keep the final review clean."
+
+### [0:16] Lead synthesizes the unified review
+The lead produced a single review comment organized by priority:
+
+**Must-Fix (3 issues):**
+1. Token storage: move from `localStorage` to `httpOnly` cookies (Security)
+2. OAuth state parameter: validate on callback to prevent CSRF (Security)
+3. Expired refresh token: add test coverage and verify the user experience (Test)
+
+**Should-Fix (3 issues):**
+4. Token refresh queries: consolidate three queries into one joined query (Performance)
+5. Account linking conflict: guard against duplicate user creation (Test)
+6. Concurrent session cleanup: invalidate OAuth tokens on session destroy (Test)
+
+**Nice-to-Have (1 issue):**
+7. Lazy-load OAuth middleware configuration (Performance)
+
+### [0:20] Review posted
+The lead formatted the review as a single PR comment with all findings, evidence links, and suggested fixes. Each finding included the severity, the file and line number, and a concrete code suggestion.
 
 ## What Went Wrong
+**The CSRF duplication** was minor but illustrative. When review dimensions overlap (security and test coverage naturally intersect on auth), reviewers will flag the same root issue from different angles. The lead spent about 2 minutes reconciling the two findings. To avoid this in future reviews, the spawn prompt could include: "If you identify an issue that crosses into another reviewer's domain, note it briefly but focus your detailed analysis on your own lens."
 
-The performance reviewer spent significant time analyzing Passport's internal middleware overhead by tracing through `node_modules` source code. This was thorough but low-value -- Passport's per-request overhead is well-documented and negligible. Better scoping in the spawn prompt ("focus on our code, not library internals") would have redirected that effort toward more impactful analysis, like checking whether the session store change affected cache hit rates.
-
-The security and test reviewers both flagged the OAuth state parameter issue independently. The duplication was not wasted (it confirmed severity from two angles), but the lead's synthesis step took extra time reconciling the overlapping findings.
+**No major failures.** This topology is low-risk since reviewers are read-only. The main cost of failure is wasted tokens from redundant analysis, not broken code. The CSRF overlap cost roughly $0.15 in duplicated work.
 
 ## Results
-
-- **3 must-fix issues** identified: OAuth CSRF vulnerability, API key auth bypass, wrong session store
-- **3 should-fix issues** identified: disabled user session check, missing integration tests, missing OAuth state tests
-- **1 nice-to-have:** duplicate middleware initialization
-- The PR author fixed all must-fix items before merge and created follow-up tickets for the should-fix items
-- The OAuth CSRF finding alone justified the review board -- it would have shipped to production otherwise
+| Metric | Value |
+|--------|-------|
+| Duration | 20 minutes |
+| Token Cost | ~$1.80 |
+| Key Deliverables | Unified review comment with 7 findings (3 must-fix, 3 should-fix, 1 nice-to-have) |
 
 ## Retrospective
-
-**What worked:** The specialist lens approach caught a real security vulnerability (OAuth CSRF) that a general-purpose review likely would have missed. The structured output format (must-fix / should-fix / nice-to-have with evidence) made the review actionable and easy to prioritize. Running reviewers in parallel meant the full review completed in ~10 minutes despite covering 34 files.
-
-**What to do differently:** Scope the performance reviewer away from library internals ("only review our application code for performance issues"). Add explicit instructions for reviewers to note when their findings overlap with another reviewer's domain ("flag for cross-reference") to make the synthesis step faster. Consider adding a 4th reviewer for API compatibility when the PR changes public interfaces.
-
-**When to reuse this pattern:** Any PR that is security-sensitive, performance-sensitive, or large enough that a single reviewer would suffer fatigue. The key signal is: "this change has multiple risk dimensions that require different expertise." Poor fits include small PRs, cosmetic changes, or changes where all risk is in a single dimension.
+- **What worked:** The multi-lens approach caught issues that a single reviewer would have missed. The security reviewer's `localStorage` finding and the test reviewer's account linking conflict are both the kind of thing that gets an "LGTM" in a tired Friday afternoon review. Having dedicated focus per dimension produced higher-quality findings.
+- **What didn't:** The CSRF overlap between security and test reviewers shows that auth reviews have natural cross-cutting concerns. The deduplication was easy but could be avoided with clearer scope instructions.
+- **Would use again?** Yes, for any PR touching authentication, authorization, payment processing, or data privacy. The $1.80 cost is trivial compared to the cost of shipping a token storage vulnerability to production.
+- **Tip:** For auth-related reviews, consider adding a fourth reviewer for "user experience on failure paths" -- what happens when tokens expire, when OAuth providers are down, when account linking fails. The test reviewer partially covered this, but a dedicated UX-of-errors lens catches things like silent logouts and confusing redirect loops that are neither security nor performance issues.
