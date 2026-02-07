@@ -12,6 +12,8 @@ Pick the topology that matches your work shape, then use the spawn prompt inside
 
 > **Note:** Quality-Gated is a **composable topology** -- it layers on top of any other pattern to enforce completion standards via hooks. You can combine it with any topology below.
 
+> **All topologies are primitives.** Quality-Gated is the most explicit overlay, but any teammate slot can itself become a topology. A reviewer in Feature Pod can spawn a Review Board. An explorer can fan out sub-explorers. See [Composing Topologies](../docs/composing-topologies.md) for recipes.
+
 ## Topology Comparison
 
 | Topology | Best For | Team Size | Cost | Parallelism |

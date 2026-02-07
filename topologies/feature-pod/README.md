@@ -88,7 +88,7 @@ Keep 5-6 tasks per teammate to stay productive and reassignable. Avoid same-file
 ## Variations
 - **Full-stack variant:** Two full-stack developers split by feature area instead of layer
 - **Contract-only variant:** Lead defines the contract, then a single agent implements all layers sequentially
-- **Review-integrated variant:** Combine with Review Board -- the pod builds, then reviewers inspect each layer
+- **Review-integrated variant:** After the pod delivers, the lead spawns a [Review Board](../review-board/) where each reviewer gets one layer. This nests two topologies: Feature Pod for building, Review Board for auditing. See [Composing Topologies](../../docs/composing-topologies.md#recipe-1-feature-pod--review-board)
 
 ## Trade-offs
 **Pros:**

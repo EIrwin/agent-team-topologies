@@ -109,6 +109,8 @@ High-risk changes (security, data migrations, core architecture) benefit from in
 
 ## Common combinations
 
+These combinations are examples of **topology composition** -- chaining or nesting primitives. See [Composing Topologies](composing-topologies.md) for full recipes with spawn prompts.
+
 | Scenario | Primary | Overlay |
 |---|---|---|
 | Ship a full-stack feature with quality checks | D (Feature Pod) | + G (Quality-Gated) |

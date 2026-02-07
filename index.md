@@ -9,7 +9,7 @@ nav_order: 1
 **Proven patterns for orchestrating multi-agent teams in Claude Code.**
 {: .fs-6 .fw-300 }
 
-8 topology patterns, copy-paste spawn prompts, and a ready-to-use `.claude/` config directory. Stop guessing how to structure your agent teams — pick the right pattern and go.
+8 primitive topology patterns that compose, combine, and nest. Copy-paste spawn prompts and a ready-to-use `.claude/` config directory. Pick a pattern, compose it with others, and go.
 {: .fs-5 .fw-300 }
 
 [Get Started](#quick-start){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -94,6 +94,9 @@ You get:
 **$$** Low |  **$$$** Medium | **$$$$** High | **+$** Additive overlay
 {: .fs-2 .text-grey-dk-000 }
 
+{: .note }
+> **Topologies are primitives, not monoliths.** Any teammate slot can itself become a topology -- a reviewer in Feature Pod can spawn a Review Board, an explorer can fan out sub-explorers. See [Composing Topologies](docs/composing-topologies.md) for recipes.
+
 ---
 
 ## Guides
@@ -105,6 +108,7 @@ You get:
 | [Anti-Patterns](docs/anti-patterns.md) | 8 things NOT to do with agent teams |
 | [Cost Guide](docs/cost-guide.md) | Token economics by topology, cost reduction strategies |
 | [Best Practices](docs/best-practices.md) | Operational guidance for running agent teams |
+| [Composing Topologies](docs/composing-topologies.md) | Recipes for chaining, nesting, and combining patterns |
 
 ---
 

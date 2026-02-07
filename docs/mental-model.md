@@ -44,6 +44,17 @@ This isolation is a feature, not a bug. It prevents context pollution and lets e
 - The work is self-contained and doesn't need shared state
 - You want burst parallelism without coordination overhead
 
+## Topologies as primitives
+
+Each topology describes a **team shape** -- not a rigid configuration. Think of them as primitive patterns that compose:
+
+- Any **teammate slot** (explorer, reviewer, worker) is just a Claude Code instance. That instance can itself run a topology.
+- A "reviewer" in a Feature Pod can spawn a full Review Board.
+- An "explorer" can fan out its own Parallel Explorers for a deep dive.
+- Quality-Gated is the most explicit example of composition (it overlays any pattern), but the principle applies to all topologies.
+
+This means the 8 patterns are building blocks, not a menu of 8 choices. Real-world agent teams often chain or nest 2-3 primitives. See [Composing Topologies](composing-topologies.md) for concrete recipes.
+
 ## Four selection heuristics
 
 Before picking a topology, run through these tests:

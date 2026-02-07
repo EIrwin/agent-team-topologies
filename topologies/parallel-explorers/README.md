@@ -80,7 +80,7 @@ Keep deliverables crisp: bullet summaries + key file paths. Avoid open-ended "ex
 
 ## Variations
 - **Deep Dive variant:** Instead of breadth-first mapping, have each explorer go deep on a single subsystem, producing detailed documentation
-- **Audit variant:** Combine with Review Board -- explorers map the codebase, then reviewers audit what they found
+- **Audit variant:** Explorers map the codebase, then findings feed into a [Review Board](../review-board/) or [Competing Hypotheses](../competing-hypotheses/) for deeper analysis. See [Composing Topologies](../../docs/composing-topologies.md)
 - **Incremental variant:** Run in rounds -- first pass maps the surface, second pass digs into areas flagged as complex or risky
 
 ## Trade-offs

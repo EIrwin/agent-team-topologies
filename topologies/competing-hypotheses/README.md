@@ -85,6 +85,7 @@ Use task list dependencies so that "Fix" tasks only unblock after "Root cause co
 - **Architecture Decision variant:** Instead of debugging, each investigator champions a different design approach and argues for it
 - **Red Team variant:** One investigator is explicitly assigned to attack and disprove every other hypothesis
 - **Time-boxed variant:** Limit debate rounds to control cost -- after N rounds, the lead forces a decision
+- **Pipeline variant:** Debate concludes with a root cause or decision, which flows into a [Risky Refactor](../risky-refactor/) for controlled execution. See [Composing Topologies](../../docs/composing-topologies.md#recipe-4-competing-hypotheses--risky-refactor)
 
 ## Trade-offs
 **Pros:**

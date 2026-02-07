@@ -84,6 +84,7 @@ The lead's primary job is creating a well-structured task graph:
 ## Variations
 - **Rotating lead variant:** Workers can escalate to become temporary coordinators for sub-problems
 - **Specialist variant:** Instead of generic workers, assign specialists (similar to Feature Pod but with more workers)
+- **Nested topology variant:** Each worker is itself a lead running a sub-topology (Feature Pod, Task Queue, etc.). The orchestrator coordinates workstreams while each workstream runs its own team shape. See [Composing Topologies](../../docs/composing-topologies.md#recipe-3-orchestrator-only-with-nested-sub-topologies)
 - **Phased variant:** Lead coordinates in waves -- first wave does research, second wave does implementation, third wave does testing
 
 ## Trade-offs

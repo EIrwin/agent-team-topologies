@@ -82,7 +82,7 @@ Require each reviewer to produce structured output: findings with severity, evid
 - **Team size:** 3 reviewers is standard; add a 4th for large or cross-cutting changes (e.g., API compatibility)
 
 ## Variations
-- **Post-implementation variant:** Combine with Feature Pod -- the pod builds, then the review board inspects
+- **Post-implementation variant:** Follows a [Feature Pod](../feature-pod/) build phase. The pod delivers, then the lead spawns the Review Board as a second phase. See [Composing Topologies](../../docs/composing-topologies.md#recipe-1-feature-pod--review-board)
 - **Continuous review variant:** Reviewers stay active across multiple PRs in a session
 - **Self-review variant:** The same team that implemented code spawns reviewers to check their own work before submitting
 

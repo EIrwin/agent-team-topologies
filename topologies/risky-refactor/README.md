@@ -80,6 +80,7 @@ Break into **sequential gates**, each blocking the next:
 - **Minimal-slice variant:** Instead of one big implementation, break into multiple small slices, each going through its own approval gate
 - **Pair-programming variant:** Implementer and reviewer work in lockstep, with the reviewer checking each commit
 - **Rollback-first variant:** Implementer writes the rollback mechanism first, then proceeds with the change
+- **Investigation-first variant:** Preceded by [Competing Hypotheses](../competing-hypotheses/) to establish the root cause before planning the fix. See [Composing Topologies](../../docs/composing-topologies.md#recipe-4-competing-hypotheses--risky-refactor)
 
 ## Trade-offs
 **Pros:**
