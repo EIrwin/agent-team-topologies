@@ -39,6 +39,7 @@ error codes). Then parallelize implementation by layer.
 ```
 
 ### Task Breakdown
+
 | Task | Owner | Blocked By | Deliverable |
 |------|-------|------------|-------------|
 | Define API contract | Lead + all | -- | Contract doc with endpoints, payloads, response schemas |
@@ -154,6 +155,7 @@ The lead flagged one minor issue: the FE agent had left a `console.log` debuggin
 **QA's early spec failures** were a minor issue. Writing specs against the contract before the implementation exists is a Feature Pod strength, but the 400-vs-422 status code mismatch shows that contracts need to be precise about HTTP status codes, not just payload shapes.
 
 ## Results
+
 | Metric | Value |
 |--------|-------|
 | Duration | 1.5 hours |

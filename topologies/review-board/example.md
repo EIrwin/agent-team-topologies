@@ -36,6 +36,7 @@ Then synthesize into one unified review comment.
 ```
 
 ### Task Breakdown
+
 | Task | Owner | Deliverable |
 |------|-------|-------------|
 | Review for security implications | Security reviewer | Structured findings report |
@@ -125,6 +126,7 @@ The lead formatted the review as a single PR comment with all findings, evidence
 **No major failures.** This topology is low-risk since reviewers are read-only. The main cost of failure is wasted tokens from redundant analysis, not broken code. The CSRF overlap cost roughly $0.15 in duplicated work.
 
 ## Results
+
 | Metric | Value |
 |--------|-------|
 | Duration | 20 minutes |

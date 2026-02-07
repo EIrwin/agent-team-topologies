@@ -35,6 +35,7 @@ Then synthesize into a single architecture document.
 ```
 
 ### Task Breakdown
+
 | Task | Owner | Deliverable |
 |------|-------|-------------|
 | Map core domain models and request lifecycle | Explorer A | 10 findings + 8 key files |
@@ -91,6 +92,7 @@ The lead combined all findings into a structured architecture document organized
 **Overlap between Explorer A and C:** Both explorers independently read `app/services/reconciliation/reconciliation_engine.rb` because it involved both domain logic (Explorer A's scope) and Sidekiq job orchestration (Explorer C's scope). This produced slightly redundant findings, though from different angles. Tighter boundary definitions in the spawn prompt would have avoided this.
 
 ## Results
+
 | Metric | Value |
 |--------|-------|
 | Duration | 45 minutes |

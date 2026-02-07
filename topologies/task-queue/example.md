@@ -39,6 +39,7 @@ Here are the violations:
 ```
 
 ### Task Breakdown (sample of 47)
+
 | # | File | Cop | Description |
 |---|------|-----|-------------|
 | 1 | `app/models/user.rb:14` | `Style/StringLiterals` | Double quotes to single quotes |
@@ -118,6 +119,7 @@ The root cause is that the self-claim mechanism uses file locking, which prevent
 **Minor inefficiency:** The workers did not prioritize by violation type. If all `Style/StringLiterals` tasks had been claimed first (fastest fixes), the queue would have cleared faster overall. Instead, workers claimed tasks in ID order, mixing fast and slow fixes. This is a minor optimization -- the time difference is maybe 2 minutes.
 
 ## Results
+
 | Metric | Value |
 |--------|-------|
 | Duration | 25 minutes |
