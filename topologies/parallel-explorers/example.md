@@ -1,3 +1,10 @@
+---
+title: "Example: Rails Monorepo Mapping"
+parent: Parallel Explorers
+grand_parent: Topologies
+nav_order: 1
+---
+
 # Parallel Explorers: Mapping an Undocumented Rails Monorepo
 
 ## Scenario

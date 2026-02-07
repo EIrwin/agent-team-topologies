@@ -1,3 +1,10 @@
+---
+title: Feature Pod
+parent: Topologies
+has_children: true
+nav_order: 4
+---
+
 # Feature Pod
 > Cross-layer feature delivery with dedicated owners per stack layer, coordinated by contract.
 

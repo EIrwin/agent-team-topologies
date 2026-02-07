@@ -1,3 +1,8 @@
+---
+title: Contributing
+nav_order: 4
+---
+
 # Contributing to Agent Team Topologies
 
 Thank you for helping improve agent team patterns. This guide covers how to propose new topologies, submit examples, improve agent definitions, and get your changes merged.

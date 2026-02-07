@@ -1,3 +1,10 @@
+---
+title: Review Board
+parent: Topologies
+has_children: true
+nav_order: 2
+---
+
 # Review Board
 > Parallel code review through distinct specialist lenses, synthesized into one verdict.
 

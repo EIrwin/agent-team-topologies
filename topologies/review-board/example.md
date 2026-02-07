@@ -1,3 +1,10 @@
+---
+title: "Example: OAuth2 PR Review"
+parent: Review Board
+grand_parent: Topologies
+nav_order: 1
+---
+
 # Review Board: OAuth2 Authentication PR Review
 
 ## Scenario

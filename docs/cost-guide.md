@@ -1,3 +1,9 @@
+---
+title: Cost Guide
+parent: Guides
+nav_order: 4
+---
+
 # Cost Guide
 
 Agent teams can use ~7x more tokens than standard single-agent sessions. This guide helps you estimate, control, and justify that cost.

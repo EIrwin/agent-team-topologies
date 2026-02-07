@@ -1,3 +1,9 @@
+---
+title: Risky Refactor
+parent: Topologies
+nav_order: 5
+---
+
 # Risky Refactor
 > High-risk changes gated through plan approval, sequential execution, and independent review.
 

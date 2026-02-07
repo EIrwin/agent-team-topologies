@@ -1,3 +1,9 @@
+---
+title: Competing Hypotheses
+parent: Topologies
+nav_order: 3
+---
+
 # Competing Hypotheses
 > Multiple investigators propose, test, and disprove theories like a scientific debate.
 

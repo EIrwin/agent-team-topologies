@@ -1,3 +1,9 @@
+---
+title: Orchestrator-Only
+parent: Topologies
+nav_order: 6
+---
+
 # Orchestrator-Only
 > The lead coordinates and delegates exclusively -- it never touches code.
 

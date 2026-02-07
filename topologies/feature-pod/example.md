@@ -1,3 +1,10 @@
+---
+title: "Example: Notification Preferences"
+parent: Feature Pod
+grand_parent: Topologies
+nav_order: 1
+---
+
 # Feature Pod: User Notification Preferences
 
 ## Scenario

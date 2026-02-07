@@ -1,3 +1,9 @@
+---
+title: Anti-Patterns
+parent: Guides
+nav_order: 3
+---
+
 # Anti-Patterns
 
 Eight failure modes that waste tokens, create conflicts, or produce garbage output.

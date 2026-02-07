@@ -1,3 +1,10 @@
+---
+title: Task Queue
+parent: Topologies
+has_children: true
+nav_order: 8
+---
+
 # Task Queue
 > Many workers self-claim from a shared pool of small, independent tasks.
 

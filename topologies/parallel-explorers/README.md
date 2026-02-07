@@ -1,3 +1,10 @@
+---
+title: Parallel Explorers
+parent: Topologies
+has_children: true
+nav_order: 1
+---
+
 # Parallel Explorers
 > Fan-out discovery across a codebase, then synthesize findings into a unified picture.
 

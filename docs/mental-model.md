@@ -1,3 +1,9 @@
+---
+title: Mental Model
+parent: Guides
+nav_order: 1
+---
+
 # Mental Model: Agent Teams in Claude Code
 
 ## What agent teams are

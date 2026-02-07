@@ -1,3 +1,9 @@
+---
+title: Best Practices
+parent: Guides
+nav_order: 5
+---
+
 # Best Practices
 
 Operational guidance for running agent teams effectively.

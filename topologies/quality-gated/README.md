@@ -1,3 +1,9 @@
+---
+title: Quality-Gated
+parent: Topologies
+nav_order: 7
+---
+
 # Quality-Gated
 > Hooks as guardrails -- enforce completion standards before work is accepted.
 

@@ -1,3 +1,9 @@
+---
+title: Decision Tree
+parent: Guides
+nav_order: 2
+---
+
 # Decision Tree: Choosing a Topology
 
 Use this tree to pick the right agent team topology for your task.
