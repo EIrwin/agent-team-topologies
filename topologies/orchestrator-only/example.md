@@ -36,30 +36,9 @@ Break work into tasks per service with clear dependencies:
 Have workers self-claim unblocked tasks. Lead tracks progress and resolves blockers.
 ```
 
-## How It Played Out
+## Trade-offs
 
-The lead began by decomposing the work into 18 tasks across the four services, organized into three dependency tiers. Tier 1: shared proto updates (4 tasks, one per service's `.proto` file). Tier 2: v2 handler implementations (8 tasks, two per service). Tier 3: gateway routing and integration tests (6 tasks, blocked by Tier 2). The dependency graph ensured no worker could start Tier 2 until the relevant proto task from Tier 1 was complete.
-
-Workers self-claimed Tier 1 tasks immediately. Worker B finished the `users` proto update first and moved to their Tier 2 handler tasks. Worker C hit a blocker in `billing`: the v2 pricing fields required a new proto message type that `gateway` also needed to import. Worker C messaged the lead, who recognized this as a cross-service dependency that wasn't in the original task graph. The lead created a new blocking task for the shared proto type and assigned it to Worker C since they understood the requirement.
-
-The most interesting coordination moment came when Worker A (gateway) was ready for Tier 3 but Worker D (inventory) was still finishing their v2 batch endpoint. The lead didn't reassign Worker A to help -- in delegate mode, the lead can't evaluate code. Instead, they created a gateway integration test task that Worker A could start with mock responses, unblocking them without waiting for inventory. When Worker D finished 12 minutes later, Worker A swapped in the real service and the tests passed on the first run.
-
-The lead synthesized final results after all 19 tasks (the original 18 plus the added shared proto task) were complete: a coordinated v2 rollout with all four services exposing both v1 and v2 endpoints, header-based version routing in the gateway, and 14 new integration tests.
-
-## What Went Wrong
-
-The original task decomposition missed the cross-service proto dependency. This is the Orchestrator-Only trade-off: the lead plans from a high level without reading code, so they can miss implementation-level dependencies. The fix was quick (one new task), but it blocked Worker C for 8 minutes. Having the lead do a quick proto-level scan before decomposing tasks would have caught it upfront.
-
-## Results
-
-| Metric | Value |
-|--------|-------|
-| Duration | 1 hour 8 minutes |
-| Token Cost | ~$7.50 |
-| Deliverables | v2 API across 4 services, header-based routing, 14 integration tests, v1 backward compatibility |
-
-## Takeaway
-
-- When a worker is blocked waiting for another service, create a **mock-based task** they can start immediately. Worker A's gateway mock tests saved 12 minutes of idle time.
-- The lead should scan shared dependencies (proto files, shared libraries) before decomposing tasks -- cross-service coupling is the most common source of missed dependencies.
-- Orchestrator-Only is expensive ($7.50 for 4 workers + lead) but justified when coordination is the bottleneck. A single agent couldn't have tracked the dependency graph across four services without losing context.
+- **The lead plans without reading code, so they miss implementation-level dependencies.** Cross-service coupling (shared proto types, common libraries) is the most common source of missed dependencies. Have the lead scan shared dependencies before decomposing tasks.
+- **When a worker is blocked, create a mock-based task.** Rather than letting a worker idle waiting for another service, give them a task they can start immediately using mock responses. Swap in real dependencies when they're ready.
+- **Orchestrator-Only is the most expensive topology.** Multiple workers plus a non-coding lead adds up. It's justified when coordination is genuinely the bottleneck -- a single agent couldn't track the dependency graph across four services without losing context.
+- **Task graphs evolve mid-session.** Accept that the original decomposition will need new tasks as implementation-level dependencies surface. The lead should be ready to create and insert blocking tasks on the fly.

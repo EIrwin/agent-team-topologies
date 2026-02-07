@@ -34,32 +34,9 @@ Use hooks to block task completion if gates fail -- send feedback with the faili
 First define the contract, then parallelize by layer.
 ```
 
-## How It Played Out
+## Trade-offs
 
-The lead configured two `TaskCompleted` hooks before spawning any teammates. The first ran `go test ./...` in the backend directory; the second ran `golangci-lint run`. Both were set to return exit code 2 on failure, which blocks task completion and sends the error output as feedback to the agent.
-
-The Feature Pod started normally: contract definition, then parallel implementation by layer. The first gate trigger came when the backend teammate tried to mark the "create payment endpoint" task complete. The `golangci-lint` hook caught an `errcheck` violation -- the teammate had ignored the error return from `json.NewEncoder().Encode()`. The hook blocked completion and sent back: "golangci-lint: errcheck violation at handlers/payment.go:47 -- error return value not checked." The backend teammate fixed the issue in under a minute and re-completed the task, passing both gates.
-
-The more interesting gate trigger came on the QA teammate's first task. Their E2E test called the payment endpoint but the test helper didn't close the HTTP response body. The `go test` hook passed (the test itself passed), but `golangci-lint` caught the `bodyclose` violation. The QA teammate added `defer resp.Body.Close()` and re-completed successfully.
-
-The frontend teammate never triggered a gate failure because their React work didn't run through Go tooling. The lead noted this gap and added an `npm run lint` hook for the frontend directory mid-session. The frontend teammate's next task completion triggered the new hook, which caught a missing `key` prop in a list rendering -- a real bug that would have caused React reconciliation issues.
-
-By the end of the session, the gates had fired 11 times across all teammates, blocking completion 4 times. Every blocked completion was fixed in under two minutes. Final integration was clean on the first attempt -- a sharp contrast to the previous session's 30 minutes of post-integration cleanup.
-
-## What Went Wrong
-
-The lead didn't initially configure a frontend lint hook, which meant the first two frontend tasks shipped without lint checks. The mid-session addition caught a real bug, but the earlier tasks had already been accepted. Lesson: configure gates for **all** layers before spawning teammates, not just the ones you think of first. An incomplete gate configuration gives a false sense of security.
-
-## Results
-
-| Metric | Value |
-|--------|-------|
-| Duration | 48 minutes |
-| Token Cost | ~$5.40 |
-| Deliverables | Payment module (API + admin panel + E2E tests), zero lint violations, all tests passing |
-
-## Takeaway
-
-- Gates should be configured **before** spawning teammates. Adding them mid-session means some tasks slip through ungated.
-- The overhead per gate check was minimal (~5 seconds for `go test`, ~3 seconds for lint). The 4 blocked completions cost ~8 minutes of rework total -- far less than the 30 minutes of post-integration cleanup in the previous ungated session.
-- Quality-Gated works best as a **composable overlay** on Feature Pod or Task Queue. It doesn't change how you decompose work -- it just adds a checkpoint at every completion boundary.
+- **Configure gates for all layers before spawning teammates.** Adding gates mid-session means early tasks slip through ungated, giving a false sense of security. Think through every layer's toolchain upfront (Go lint, npm lint, test suites).
+- **Gate overhead is minimal.** Lint and test checks typically add only seconds per completion. The rework they prevent (catching violations immediately vs. during integration) is far more expensive than the check itself.
+- **Quality-Gated works best as a composable overlay.** Layer it on Feature Pod or Task Queue -- it doesn't change how you decompose work, just adds a checkpoint at every completion boundary.
+- **Gates catch process failures, not design failures.** A passing test suite and clean lint don't guarantee the implementation is correct. Gates enforce a minimum bar, not a maximum quality standard.

@@ -36,32 +36,9 @@ Have each report findings as must-fix vs nice-to-have with file:line evidence.
 Then synthesize into one review comment.
 ```
 
-## How It Played Out
+## Trade-offs
 
-The lead assigned the three review lenses and pointed all reviewers at the same diff. All three started reading the changeset simultaneously.
-
-The security reviewer found two must-fix issues within minutes. First, `jwt.go` was using `jwt.Parse()` without specifying allowed signing algorithms, which left it open to an algorithm-confusion attack where an attacker could switch from RS256 to HS256 using the public key as the HMAC secret. Second, the rate limiter stored client IPs in a `sync.Map` that never evicted entries -- a slow-leak DoS vector. Both findings included exact file:line references and suggested fixes.
-
-The performance reviewer confirmed the `sync.Map` concern from a different angle: under load, the rate limiter would grow unbounded and cause GC pressure. They also flagged that the middleware chain created a new `slog.Logger` per request via `slog.With()`, which allocated on every call. Switching to a handler-level logger passed via context would eliminate ~2KB of allocations per request.
-
-The test reviewer found that `middleware_test.go` covered the happy path well but had no tests for expired tokens, malformed JWTs, or the rate limiter's eviction behavior (because there was no eviction). They also noted the tests used `httptest.NewRecorder` but never asserted on response headers -- the `WWW-Authenticate` header was silently missing from 401 responses.
-
-The lead merged all findings into a single prioritized review comment: two must-fix security issues, one must-fix performance issue (unbounded map), and three nice-to-have improvements (per-request allocations, missing header assertions, expired token tests).
-
-## What Went Wrong
-
-The security and performance reviewers both flagged the unbounded `sync.Map` -- one as a DoS vector, the other as a memory leak. The lead had to deduplicate and decided to present it as a security finding with a performance note. This overlap is inherent when a single code structure has implications across lenses. Tighter scope definitions could reduce it but never eliminate it entirely.
-
-## Results
-
-| Metric | Value |
-|--------|-------|
-| Duration | 22 minutes |
-| Token Cost | ~$1.60 |
-| Deliverables | Single review comment with 3 must-fix, 3 nice-to-have findings |
-
-## Takeaway
-
-- The highest-value findings came from the **intersection** of lenses -- the `sync.Map` issue was both a security and performance problem that a single generalist reviewer might have noted only once.
-- Require reviewers to use a consistent output format (severity / file:line / evidence / fix) -- it makes the lead's synthesis step mechanical rather than interpretive.
-- Three reviewers is the sweet spot for most PRs. A fourth (API compatibility) is worth adding only for public-facing API changes.
+- **Lens overlap is inherent.** When a single code structure has implications across dimensions (e.g., an unbounded map is both a security DoS vector and a performance leak), multiple reviewers will flag it independently. The lead must deduplicate during synthesis.
+- **Require consistent output format.** Severity / file:line / evidence / fix -- this structure makes the lead's synthesis step mechanical rather than interpretive. Without it, merging three free-form reviews is painful.
+- **Three reviewers is the sweet spot for most PRs.** A fourth lens (e.g., API compatibility) is worth adding only for public-facing API changes. Beyond four, the coordination cost outweighs the marginal findings.
+- **The best findings come from intersections.** Issues that span multiple lenses are exactly what a single generalist reviewer would note only once (if at all). The multi-lens approach surfaces these systematically.

@@ -33,32 +33,9 @@ Approval criteria: full query inventory, migration order, rollback plan, test st
 After approval, spawn an implementer to execute the plan + a reviewer to validate.
 ```
 
-## How It Played Out
+## Trade-offs
 
-The architect started by cataloging every raw SQL query across the 12 repository files. They found 34 queries total: 18 simple CRUD operations, 11 queries with dynamic filters built via string concatenation, and 5 complex joins. The architect flagged the 11 dynamic-filter queries as the highest risk because `sqlc` handles dynamic `WHERE` clauses differently than hand-written string building.
-
-The migration plan proposed three phases: first, migrate the 18 simple CRUD queries (low risk, high volume); second, migrate the 5 complex joins (medium risk); third, migrate the 11 dynamic-filter queries using `sqlc`'s `sqlc.arg()` and `CASE WHEN` patterns. Each phase included a rollback step: keep the old repository methods as `_deprecated` suffixes until the phase's tests pass, then delete them. The architect estimated the whole migration at 45-60 minutes of implementation time.
-
-The lead reviewed the plan and pushed back on one point: the architect had proposed migrating all 18 CRUD queries in a single commit. The lead required splitting into batches of 6 to keep each commit reviewable. The architect revised, the lead approved, and the implementer started.
-
-The implementer worked through phase one methodically, writing `.sql` files in `queries/`, running `sqlc generate`, and updating each repository file to use the generated code. Phase two (complex joins) required rewriting two queries as CTEs to fit `sqlc`'s parser, but the generated types caught a field mismatch that had been silently truncating a `description` column in production -- exactly the kind of bug that motivated the migration.
-
-The reviewer validated each phase against the plan, ran the full test suite, and confirmed that the generated types matched the existing struct definitions. On phase three, the reviewer caught that one dynamic-filter query had been migrated incorrectly -- the `CASE WHEN @filter != '' THEN column = @filter ELSE TRUE END` pattern was producing a full table scan because the query planner couldn't optimize the conditional. The implementer fixed it by splitting into two named queries (`ListUsersFiltered` and `ListUsersAll`) and selecting at runtime in Go.
-
-## What Went Wrong
-
-Phase three took twice as long as the architect estimated. The dynamic-filter queries required more creative `sqlc` patterns than expected, and two queries needed to be split into separate named queries rather than using the `CASE WHEN` approach. The architect's plan was good but underestimated the impedance mismatch between dynamic SQL and `sqlc`'s static analysis model. The lesson: when estimating, double the time for the "hard" category.
-
-## Results
-
-| Metric | Value |
-|--------|-------|
-| Duration | 1 hour 24 minutes |
-| Token Cost | ~$5.20 |
-| Deliverables | 34 queries migrated to sqlc, zero runtime type mismatches, 1 production bug found during migration |
-
-## Takeaway
-
-- Separating the architect and implementer genuinely helped -- the architect's query inventory caught patterns the implementer would have discovered mid-flight, causing costly context switches.
-- The plan approval gate caught a real issue (batch size too large). Even brief pushback from the lead improves plan quality.
-- Keep deprecated code until each phase's tests pass. The ability to `git diff` old vs. new repository methods side-by-side was invaluable for the reviewer.
+- **Separating architect and implementer genuinely helps.** The architect's query inventory catches patterns the implementer would discover mid-flight, causing costly context switches. The upfront catalog pays for itself.
+- **Plan approval gates catch real issues.** Even brief pushback from the lead (e.g., "batch size too large" or "migration order wrong") improves plan quality. Don't skip this step for speed.
+- **Estimate double for the "hard" category.** Dynamic SQL, complex joins, and anything that doesn't map cleanly to the target tool's model will take longer than expected. Architects tend to underestimate impedance mismatch.
+- **Keep deprecated code until tests pass.** The ability to diff old vs. new implementations side-by-side is invaluable for the reviewer. Delete the old code only after each phase is verified.
