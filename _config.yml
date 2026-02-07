@@ -1,5 +1,7 @@
 title: Agent Team Topologies
-description: Proven patterns for orchestrating multi-agent teams in Claude Code
+description: >-
+  Reusable team topology patterns for structuring multi-agent collaboration in Claude Code --
+  8 composable primitives with spawn prompts, agent definitions, and quality gate hooks.
 baseurl: /agent-team-topologies
 url: https://eirwin.github.io
 
@@ -18,6 +20,10 @@ heading_anchors: true
 back_to_top: true
 back_to_top_text: "Back to top"
 
+last_modified_date:
+  enabled: true
+  date_format: "%b %d, %Y"
+
 nav_sort: case_insensitive
 
 aux_links:
@@ -25,6 +31,12 @@ aux_links:
     - "https://github.com/eirwin/agent-team-topologies"
 
 aux_links_new_tab: true
+
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub"
+gh_edit_repository: "https://github.com/eirwin/agent-team-topologies"
+gh_edit_branch: "main"
+gh_edit_view_mode: "tree"
 
 mermaid:
   version: "11"
