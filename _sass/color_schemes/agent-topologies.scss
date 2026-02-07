@@ -1,0 +1,51 @@
+// Agent Topologies custom color scheme
+// Built on top of the dark scheme from Just the Docs
+
+@import "./color_schemes/dark";
+
+// Brand accent: blue-purple
+$link-color: #7c8aff;
+$link-color-visited: #b39ddb;
+
+// Sidebar
+$nav-child-link-color: #c5cae9;
+$sidebar-color: #1a1e2e;
+$search-background-color: #252a3a;
+
+// Buttons
+$btn-primary-color: #7c4dff;
+
+// Code blocks
+$code-background-color: #1e2233;
+$code-linenumber-color: #5c6370;
+
+// Body
+$body-background-color: #12141f;
+$body-text-color: #e0e0e0;
+$body-heading-color: #ffffff;
+
+// Table
+$table-background-color: #1a1e2e;
+
+// Search
+$search-result-preview-color: #b0bec5;
+
+// Border
+$border-color: #2a2f42;
+
+// Feedback / badges
+$green-100: #1b5e20;
+$green-200: #2e7d32;
+$green-300: #66bb6a;
+$yellow-100: #e65100;
+$yellow-200: #f57c00;
+$yellow-300: #ffa726;
+$red-100: #b71c1c;
+$red-200: #d32f2f;
+$red-300: #ef5350;
+$purple-100: #4a148c;
+$purple-200: #7b1fa2;
+$purple-300: #ab47bc;
+$blue-100: #0d47a1;
+$blue-200: #1565c0;
+$blue-300: #42a5f5;

@@ -16,6 +16,13 @@ nav_order: 5
 | Complexity | Medium-High |
 | Parallelism | Low (sequential by design) |
 
+Medium-High Complexity
+{: .label .label-yellow }
+$$ Cost
+{: .label .label-green }
+Low Parallelism
+{: .label .label-red }
+
 ## When to Use
 - The change has a high blast radius (touches core systems, auth, data models)
 - Getting it wrong is expensive or hard to reverse
@@ -30,15 +37,16 @@ nav_order: 5
 ## How It Works
 The architect produces a detailed plan in read-only plan mode. The lead reviews and approves (or rejects with feedback). Only after approval does the implementer execute the plan. A separate reviewer then validates the result against the original plan and acceptance criteria.
 
-```
-      ┌──────┐
-      │ Lead │         Approves plan, oversees
-      └──┬───┘
-         │
-      ┌──────┐  approve  ┌──────┐  review  ┌─────┐
-      │ Arch │──────────►│ Impl │────────►│ Rev │
-      └──────┘  (plan)   └──────┘ (build)  └─────┘
-      Sequential gates reduce blast radius
+```mermaid
+graph LR
+    Lead[Lead<br/>Approver]
+    Arch[Architect<br/>Plan Mode]
+    Impl[Implementer<br/>Execute Plan]
+    Rev[Reviewer<br/>Validate]
+    Lead -.->|oversees| Arch
+    Arch -->|plan approved| Impl
+    Impl -->|build complete| Rev
+    Rev -.->|verified| Lead
 ```
 
 1. **Architect** analyzes the codebase and produces a plan (in plan mode -- read-only until approved)

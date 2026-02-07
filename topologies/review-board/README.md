@@ -17,6 +17,13 @@ nav_order: 2
 | Complexity | Low |
 | Parallelism | High |
 
+Low Complexity
+{: .label .label-green }
+$$ Cost
+{: .label .label-yellow }
+High Parallelism
+{: .label .label-blue }
+
 ## When to Use
 - A PR or changeset is large enough that one reviewer would miss things
 - You want coverage across multiple dimensions (security, performance, correctness, tests)
@@ -31,15 +38,18 @@ nav_order: 2
 ## How It Works
 The lead assigns each reviewer a distinct lens (security, performance, test coverage, etc.). Reviewers work in parallel, each producing structured findings in a consistent format. The lead collects all reports and synthesizes a single review comment with prioritized action items.
 
-```
-         ┌──────┐
-         │ Lead │      Editor-in-chief
-         └──┬───┘
-        ┌───┼───┐
-        ▼   ▼   ▼
-      ┌───┬───┬───┐
-      │Sec│Prf│Tst│   Security / Performance / Tests
-      └───┴───┴───┘   Each reviews with distinct lens
+```mermaid
+graph TD
+    Lead[Lead<br/>Editor-in-Chief]
+    Sec[Security<br/>Reviewer]
+    Perf[Performance<br/>Reviewer]
+    Test[Test<br/>Reviewer]
+    Lead -->|assign lens| Sec
+    Lead -->|assign lens| Perf
+    Lead -->|assign lens| Test
+    Sec -.->|findings| Lead
+    Perf -.->|findings| Lead
+    Test -.->|findings| Lead
 ```
 
 1. **Lead** identifies the changeset and assigns review lenses

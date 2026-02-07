@@ -16,6 +16,13 @@ nav_order: 7
 | Complexity | Low-Medium |
 | Parallelism | Varies (inherits from base topology) |
 
+Low-Medium Complexity
+{: .label .label-green }
++$ Cost
+{: .label .label-purple }
+Composable
+{: .label .label-blue }
+
 ## When to Use
 - You want to enforce that tests pass, lint is clean, or docs are updated before a task is marked done
 - Teammates tend to mark work complete prematurely
@@ -30,15 +37,16 @@ nav_order: 7
 ## How It Works
 Quality-Gated is a **composable topology** -- it layers on top of any other pattern. It uses Claude Code hooks (`TaskCompleted` and `TeammateIdle`) to intercept completion events and enforce quality criteria. If criteria are not met, the hook returns exit code 2, which blocks completion and sends feedback to the agent to fix the issues.
 
-```
-      ┌────────┐     ┌──────┐     ┌───┐
-      │ Worker │────►│ Gate │────►│ ✓ │
-      └────────┘     └──┬───┘     └───┘
-                        │ fail
-                        ▼
-                   ┌──────────┐
-                   │ feedback │   Composable: layer on
-                   └──────────┘   any other topology
+```mermaid
+graph LR
+    Worker[Worker<br/>Completes Task]
+    Gate{Quality<br/>Gate}
+    Pass[✓ Accepted]
+    Fail[Feedback]
+    Worker --> Gate
+    Gate -->|pass| Pass
+    Gate -->|fail| Fail
+    Fail -.->|fix issues| Worker
 ```
 
 1. **Worker** completes their task and marks it done (or goes idle)

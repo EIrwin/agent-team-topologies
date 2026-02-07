@@ -17,6 +17,13 @@ nav_order: 8
 | Complexity | Low |
 | Parallelism | Very High |
 
+Low Complexity
+{: .label .label-green }
+$$$$ Cost
+{: .label .label-red }
+Very High Parallelism
+{: .label .label-blue }
+
 ## When to Use
 - You have a backlog of many small, independent work items
 - Each item is self-contained and does not depend on others
@@ -31,15 +38,23 @@ nav_order: 8
 ## How It Works
 The lead creates a large pool of small, independent tasks in the shared task list. Workers self-claim the next unblocked task, complete it, and immediately grab the next one. File locking prevents race conditions on task claims. The lead monitors progress and aggregates results.
 
-```
-            ┌──────┐
-            │ Lead │        Aggregator
-            └──┬───┘
-      ┌────────┼────────┐
-      ▼   ▼   ▼   ▼   ▼
-     ●   ●   ●   ●   ●    Workers self-claim from
-     ●   ●   ●            shared task queue
-     Workers grab next unblocked task
+```mermaid
+graph TD
+    Lead[Lead<br/>Aggregator]
+    Queue[(Task Queue)]
+    W1[Worker 1]
+    W2[Worker 2]
+    W3[Worker 3]
+    W4[Worker 4]
+    W5[Worker 5]
+    Lead -->|create tasks| Queue
+    Queue -.->|claim| W1
+    Queue -.->|claim| W2
+    Queue -.->|claim| W3
+    Queue -.->|claim| W4
+    Queue -.->|claim| W5
+    W1 -.->|done, claim next| Queue
+    W2 -.->|done, claim next| Queue
 ```
 
 1. **Lead** creates a pool of small, self-contained tasks with clear acceptance criteria

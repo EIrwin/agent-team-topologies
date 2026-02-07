@@ -1,0 +1,128 @@
+// Agent Topologies custom styles
+
+// Typography - Inter font
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+// Homepage hero
+.main-content {
+  > h1:first-child {
+    font-size: 2.4rem !important;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+}
+
+// Hero area styling for home layout
+.main-content-wrap {
+  .fs-6 {
+    color: #b0bec5;
+  }
+}
+
+// Better spacing between sections
+.main-content {
+  hr {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-color: #2a2f42;
+  }
+
+  h2 {
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+  }
+}
+
+// Card-like table styling
+.main-content {
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #2a2f42;
+
+    thead {
+      th {
+        background-color: #1a1e2e;
+        border-bottom: 2px solid #7c4dff;
+        font-weight: 600;
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background-color 0.15s ease;
+
+        &:hover {
+          background-color: rgba(124, 77, 255, 0.06);
+        }
+
+        td {
+          padding: 0.75rem 1rem;
+          border-bottom: 1px solid #2a2f42;
+        }
+
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+// Spawn prompt code blocks - subtle differentiation
+.main-content {
+  .language-text {
+    border-left: 3px solid #7c4dff;
+  }
+}
+
+// Mermaid diagram styling
+.main-content {
+  pre.mermaid,
+  .mermaid {
+    background: transparent !important;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+}
+
+// Label adjustments for better readability on dark theme
+.label {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// Callout adjustments
+.warning,
+.note,
+.tip,
+.important {
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+// Button styling
+.btn-primary {
+  background-color: #7c4dff;
+  border-color: #7c4dff;
+
+  &:hover {
+    background-color: #651fff;
+    border-color: #651fff;
+  }
+}
+
+// Sidebar active item accent
+.site-nav {
+  .nav-list-item {
+    .nav-list-link.active {
+      border-left-color: #7c4dff;
+    }
+  }
+}

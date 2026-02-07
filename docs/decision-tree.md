@@ -10,75 +10,70 @@ Use this tree to pick the right agent team topology for your task.
 
 ## The tree
 
-```
-What are you trying to do?
-│
-├─ UNDERSTAND something (explore, investigate, map)
-│  │
-│  ├─ One focused question?
-│  │  └─ Subagent (burst lookup + summarize back)
-│  │
-│  ├─ Multiple independent questions or modules?
-│  │  └─ Pattern A: Parallel Explorers
-│  │     2-4 explorers, each with a module/question boundary
-│  │
-│  └─ Ambiguous bug or unclear root cause?
-│     └─ Pattern C: Competing Hypotheses
-│        2+ solvers propose theories, critic/lead reconciles
-│
-├─ BUILD something (implement, deliver)
-│  │
-│  ├─ Can work be split by layer/component?
-│  │  │
-│  │  │  Independence test: Will workers edit different files?
-│  │  │  ├─ YES --> Pattern D: Feature Pod
-│  │  │  │         FE + BE + QA workers, contract task first
-│  │  │  └─ NO  --> Rethink decomposition or use single agent
-│  │  │
-│  │  └─ Is there a large backlog of small independent items?
-│  │     └─ Pattern H: Task Queue
-│  │        3-8 workers self-claiming from shared task list
-│  │
-│  └─ Should lead only coordinate (not implement)?
-│     └─ Pattern F: Orchestrator-Only (delegate mode)
-│        Lead restricted to coordination; workers execute
-│
-├─ REVIEW something (audit, critique, validate)
-│  │
-│  ├─ Need multiple review perspectives?
-│  │  └─ Pattern B: Review Board
-│  │     Security + perf + correctness reviewers in parallel
-│  │
-│  └─ Single-lens review?
-│     └─ Subagent with a focused checklist
-│
-└─ CHANGE something risky (refactor, migrate, security)
-   │
-   ├─ Context budget test: Will analysis exceed one context?
-   │  ├─ YES --> Agent team (separate context per worker)
-   │  └─ NO  --> Single agent may suffice
-   │
-   └─ Risk test: Is this expensive to get wrong?
-      ├─ YES --> Pattern E: Risky Refactor
-      │         Plan mode + approval gate before execution
-      └─ NO  --> Standard topology for the work shape
+```mermaid
+flowchart TD
+    Start{What are you<br/>trying to do?}
+
+    Understand[UNDERSTAND<br/>explore, investigate, map]
+    Build[BUILD<br/>implement, deliver]
+    Review[REVIEW<br/>audit, critique, validate]
+    Change[CHANGE something risky<br/>refactor, migrate, security]
+
+    Start --> Understand
+    Start --> Build
+    Start --> Review
+    Start --> Change
+
+    Q1{One focused<br/>question?}
+    Q2{Multiple independent<br/>questions?}
+    Q3{Ambiguous bug?}
+
+    Understand --> Q1
+    Understand --> Q2
+    Understand --> Q3
+
+    Q1 -->|yes| Sub1[Subagent<br/>burst lookup]
+    Q2 -->|yes| A[A: Parallel Explorers]
+    Q3 -->|yes| C[C: Competing Hypotheses]
+
+    Q4{Split by<br/>layer/component?}
+    Q5{Large backlog of<br/>small items?}
+    Q6{Lead should only<br/>coordinate?}
+
+    Build --> Q4
+    Build --> Q5
+    Build --> Q6
+
+    Q4 -->|yes, different files| D[D: Feature Pod]
+    Q5 -->|yes| H[H: Task Queue]
+    Q6 -->|yes| F[F: Orchestrator-Only]
+
+    Q7{Multiple review<br/>perspectives?}
+
+    Review --> Q7
+    Q7 -->|yes| B[B: Review Board]
+    Q7 -->|no| Sub2[Subagent with<br/>focused checklist]
+
+    Q8{Expensive to<br/>get wrong?}
+
+    Change --> Q8
+    Q8 -->|yes| E[E: Risky Refactor]
+    Q8 -->|no| Std[Standard topology<br/>for work shape]
 ```
 
 ## Pattern G: Quality-Gated Delivery (composable overlay)
 
 Pattern G is not a standalone topology -- it layers on top of any other pattern. Apply it when you need enforced "Definition of Done" criteria.
 
-```
-Any topology (A through F, or H)
-  + Quality gates needed?
-    │
-    ├─ TaskCompleted hook
-    │  Blocks task completion until criteria pass
-    │  (tests green, lint clean, docs updated)
-    │
-    └─ TeammateIdle hook
-       Triggers action when a teammate stops working
-       (run tests, summarize findings, open PR)
+```mermaid
+graph LR
+    Any[Any Topology<br/>A through F, or H]
+    QG{Quality gates<br/>needed?}
+    TC[TaskCompleted hook<br/>blocks until criteria pass]
+    TI[TeammateIdle hook<br/>triggers action on idle]
+    Any --> QG
+    QG --> TC
+    QG --> TI
 ```
 
 **When to overlay Pattern G:**

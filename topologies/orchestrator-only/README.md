@@ -16,6 +16,13 @@ nav_order: 6
 | Complexity | High |
 | Parallelism | High |
 
+High Complexity
+{: .label .label-red }
+$$$$ Cost
+{: .label .label-red }
+High Parallelism
+{: .label .label-blue }
+
 ## When to Use
 - The project has many parallel workstreams that benefit from dedicated coordination
 - You want the lead to focus purely on task breakdown, dependency management, and synthesis
@@ -31,15 +38,23 @@ nav_order: 6
 ## How It Works
 The lead operates in delegate mode, which restricts it to coordination tools only (spawn, message, shutdown, tasks). Workers self-claim unblocked tasks from the shared task list. The lead focuses on task decomposition, dependency graphs, resolving blockers, and synthesizing results.
 
-```
-          ┌──────┐
-          │ Lead │     Delegate mode: coordinates only
-          └──┬───┘
-       ┌──┬──┼──┬──┐
-       ▼  ▼  ▼  ▼  ▼
-      ┌──┬──┬──┬──┐
-      │D1│D2│D3│D4│   Workers self-claim tasks
-      └──┴──┴──┴──┘   Lead never touches code
+```mermaid
+graph TD
+    Lead[Lead<br/>Delegate Mode]
+    Tasks[(Shared Task List)]
+    D1[Worker 1]
+    D2[Worker 2]
+    D3[Worker 3]
+    D4[Worker 4]
+    Lead -->|decompose & assign| Tasks
+    Tasks -.->|self-claim| D1
+    Tasks -.->|self-claim| D2
+    Tasks -.->|self-claim| D3
+    Tasks -.->|self-claim| D4
+    D1 -.->|status| Lead
+    D2 -.->|status| Lead
+    D3 -.->|status| Lead
+    D4 -.->|status| Lead
 ```
 
 1. **Lead** decomposes the project into tasks with clear deliverables and dependencies

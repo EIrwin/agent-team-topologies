@@ -17,6 +17,13 @@ nav_order: 4
 | Complexity | Medium |
 | Parallelism | High |
 
+Medium Complexity
+{: .label .label-yellow }
+$$$ Cost
+{: .label .label-yellow }
+High Parallelism
+{: .label .label-blue }
+
 ## When to Use
 - A feature spans multiple layers (UI, API, database, tests)
 - Each layer can be owned independently with a clear interface contract
@@ -31,15 +38,21 @@ nav_order: 4
 ## How It Works
 The team starts by defining a contract: API shape, data payloads, and acceptance criteria. Once the contract is agreed, each layer owner implements their portion in parallel, working against the shared contract. The lead coordinates integration and final verification.
 
-```
-         ┌──────┐
-         │ Lead │      Orchestrator
-         └──┬───┘
-        ┌───┼───┐
-        ▼   ▼   ▼
-      ┌──┐┌──┐┌──┐
-      │FE││BE││QA│     Each owns a stack layer
-      └──┘└──┘└──┘     Contract-first, then parallelize
+```mermaid
+graph TD
+    Lead[Lead<br/>Orchestrator]
+    Contract[Define Contract<br/>API + Payloads + Criteria]
+    FE[Frontend]
+    BE[Backend]
+    QA[QA / Tests]
+    Integration[Integration<br/>& Verification]
+    Lead --> Contract
+    Contract --> FE
+    Contract --> BE
+    Contract --> QA
+    FE --> Integration
+    BE --> Integration
+    QA --> Integration
 ```
 
 1. **Lead** creates a "contract" task defining the API shape, payloads, and acceptance criteria

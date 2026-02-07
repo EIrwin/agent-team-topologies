@@ -20,14 +20,15 @@ Treat every spawn prompt as a self-contained brief:
 
 If context is too large for a spawn prompt, write it to a file and reference the path.
 
-```text
-# Good spawn prompt
-Trace the authentication flow starting from src/auth/login.ts:42.
-Map every function call from the POST /auth/login handler through
-to token generation in src/auth/tokens.ts.
-Deliver: ordered list of functions called, file paths, and any
-external service calls. Flag anything that looks like a security concern.
-```
+{: .tip }
+> **Good spawn prompt example:**
+> ```text
+> Trace the authentication flow starting from src/auth/login.ts:42.
+> Map every function call from the POST /auth/login handler through
+> to token generation in src/auth/tokens.ts.
+> Deliver: ordered list of functions called, file paths, and any
+> external service calls. Flag anything that looks like a security concern.
+> ```
 
 ## Small, self-contained tasks
 
@@ -41,7 +42,8 @@ Tasks that are too large lead to context exhaustion. Tasks that are too small cr
 
 ## Hooks as guardrails
 
-Use hooks to enforce standards without manual oversight.
+{: .note }
+> Use hooks to enforce standards without manual oversight. Hooks catch problems at the point of failure, not after synthesis.
 
 **TaskCompleted** -- blocks task completion until checks pass:
 ```json
@@ -63,11 +65,12 @@ Use hooks to enforce standards without manual oversight.
 - Clean up temporary files
 - Signal readiness for shutdown
 
-Hooks catch problems at the point of failure, not after synthesis. A blocked task costs less to fix than a merged defect.
+A blocked task costs less to fix than a merged defect.
 
 ## Output discipline
 
-Require structured output from teammates. Unstructured "stream of consciousness" findings are hard to synthesize and waste the lead's context window.
+{: .tip }
+> Require structured output from teammates. Unstructured "stream of consciousness" findings are hard to synthesize and waste the lead's context window.
 
 Good output formats:
 - Bullet lists with severity/priority

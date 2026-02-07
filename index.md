@@ -19,38 +19,57 @@ nav_order: 1
 
 ## Pick Your Topology
 
-```
-  What are you trying to do?
-  │
-  ├── Discover / Research ──────────► A: Parallel Explorers
-  │
-  ├── Review code ──────────────────► B: Review Board
-  │
-  ├── Debug ambiguous issue ────────► C: Competing Hypotheses
-  │
-  ├── Build multi-layer feature
-  │   ├── High risk? ──────────────► E: Risky Refactor
-  │   └── Standard ───────────────► D: Feature Pod
-  │
-  ├── Process many small tasks ─────► H: Task Queue
-  │
-  ├── Pure coordination ────────────► F: Orchestrator-Only
-  │
-  └── Need quality gates? ─────────► G: Quality-Gated
-      (composable: add to any above)
+```mermaid
+flowchart TD
+    Start{What are you trying to do?}
+
+    Understand[Understand / Research]
+    Build[Build / Implement]
+    Review[Review / Audit]
+    Risky[Risky Change]
+
+    Start --> Understand
+    Start --> Build
+    Start --> Review
+    Start --> Risky
+
+    Understand -->|multiple questions| A[Parallel Explorers]
+    Understand -->|ambiguous bug| C[Competing Hypotheses]
+
+    Build -->|multi-layer feature| D[Feature Pod]
+    Build -->|many small tasks| H[Task Queue]
+    Build -->|pure coordination| F[Orchestrator-Only]
+    Build -->|high risk| E[Risky Refactor]
+
+    Review -->|multiple lenses| B[Review Board]
+
+    Risky -->|expensive to get wrong| E
+
+    G[Quality-Gated]
+    G -.->|composable: add to any| Start
+
+    style A fill:#1a73e8,color:#fff
+    style B fill:#1a73e8,color:#fff
+    style C fill:#1a73e8,color:#fff
+    style D fill:#1a73e8,color:#fff
+    style E fill:#1a73e8,color:#fff
+    style F fill:#1a73e8,color:#fff
+    style G fill:#7c4dff,color:#fff
+    style H fill:#1a73e8,color:#fff
 ```
 
 ---
 
 ## Quick Start
 
-**Copy the `.claude/` directory into your project** to get pre-built agents, a topology chooser skill, and quality gate hooks:
-
-```bash
-# Clone and copy configs into your project
-git clone https://github.com/eirwin/agent-team-topologies.git
-cp -r agent-team-topologies/.claude/ your-project/.claude/
-```
+{: .note }
+> **Copy the `.claude/` directory into your project** to get pre-built agents, a topology chooser skill, and quality gate hooks:
+>
+> ```bash
+> # Clone and copy configs into your project
+> git clone https://github.com/eirwin/agent-team-topologies.git
+> cp -r agent-team-topologies/.claude/ your-project/.claude/
+> ```
 
 You get:
 - **6 agent definitions** — explorer, security reviewer, performance reviewer, test reviewer, architect, implementer
@@ -63,14 +82,17 @@ You get:
 
 | Pattern | Best For | Cost |
 |---------|----------|------|
-| [Parallel Explorers](topologies/parallel-explorers/) | Discovery, research, codebase mapping | $$ |
-| [Review Board](topologies/review-board/) | Code review with distinct lenses | $$ |
-| [Competing Hypotheses](topologies/competing-hypotheses/) | Ambiguous bugs, architectural decisions | $$$ |
-| [Feature Pod](topologies/feature-pod/) | Cross-layer feature delivery | $$$ |
-| [Risky Refactor](topologies/risky-refactor/) | High-risk changes needing plan approval | $$ |
-| [Orchestrator-Only](topologies/orchestrator-only/) | Pure coordination, lead never codes | $$$$ |
-| [Quality-Gated](topologies/quality-gated/) | Enforcing completion standards (composable) | +$ |
-| [Task Queue](topologies/task-queue/) | Many small independent tasks | $$$$ |
+| [Parallel Explorers](topologies/parallel-explorers/) | Discovery, research, codebase mapping | **$$** |
+| [Review Board](topologies/review-board/) | Code review with distinct lenses | **$$** |
+| [Competing Hypotheses](topologies/competing-hypotheses/) | Ambiguous bugs, architectural decisions | **$$$** |
+| [Feature Pod](topologies/feature-pod/) | Cross-layer feature delivery | **$$$** |
+| [Risky Refactor](topologies/risky-refactor/) | High-risk changes needing plan approval | **$$** |
+| [Orchestrator-Only](topologies/orchestrator-only/) | Pure coordination, lead never codes | **$$$$** |
+| [Quality-Gated](topologies/quality-gated/) | Enforcing completion standards (composable) | **+$** |
+| [Task Queue](topologies/task-queue/) | Many small independent tasks | **$$$$** |
+
+**$$** Low |  **$$$** Medium | **$$$$** High | **+$** Additive overlay
+{: .fs-2 .text-grey-dk-000 }
 
 ---
 

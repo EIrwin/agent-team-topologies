@@ -26,10 +26,14 @@ Agent teams can use ~7x more tokens than standard single-agent sessions. This gu
 ## 8 cost reduction strategies
 
 ### 1. Keep teams small
-Every teammate is a full Claude Code instance. 2-3 focused workers almost always outperform 5-6 generalists. Start with the minimum viable team and add only if bottlenecked.
+
+{: .tip }
+> Every teammate is a full Claude Code instance. 2-3 focused workers almost always outperform 5-6 generalists. Start with the minimum viable team and add only if bottlenecked.
 
 ### 2. Use Sonnet for teammates
-Reserve Opus for the lead (coordination, synthesis, judgment). Use Sonnet for workers doing execution tasks (implementation, testing, file scanning). The cost difference is significant at team scale.
+
+{: .tip }
+> Reserve Opus for the lead (coordination, synthesis, judgment). Use Sonnet for workers doing execution tasks (implementation, testing, file scanning). The cost difference is significant at team scale.
 
 ### 3. Write focused spawn prompts
 Vague prompts waste tokens on exploration. Include: specific deliverable, scope boundaries, relevant file paths, output format. A 200-token prompt that eliminates 2000 tokens of wandering is a good trade.
@@ -38,7 +42,9 @@ Vague prompts waste tokens on exploration. Include: specific deliverable, scope 
 Use `TeammateIdle` hooks or manual shutdown. An idle teammate sitting in context burns tokens on every interaction cycle. Shut them down the moment their work is complete.
 
 ### 5. Avoid broadcasts
-Each broadcast sends a separate message to every teammate. With 4 teammates, one broadcast = 4 message deliveries. Default to direct messages; broadcast only for blocking issues.
+
+{: .tip }
+> Each broadcast sends a separate message to every teammate. With 4 teammates, one broadcast = 4 message deliveries. Default to direct messages; broadcast only for blocking issues.
 
 ### 6. Scope tasks tightly
 5-6 small, well-defined tasks per teammate. Each task should have clear inputs, outputs, and completion criteria. This prevents scope creep and makes it obvious when a teammate is done.
@@ -51,7 +57,8 @@ A `TaskCompleted` hook that runs tests adds a small per-task cost but prevents t
 
 ## When to stop using agent teams
 
-Agent teams are not always the right tool. Stop using them when:
+{: .warning }
+> Agent teams are not always the right tool. Stop using them when:
 
 **Tasks are fundamentally sequential.** If each step depends on the previous step's output, you're paying for parallel infrastructure but executing serially. Use a single agent with subagent calls for isolation where needed.
 

@@ -16,6 +16,13 @@ nav_order: 3
 | Complexity | Medium |
 | Parallelism | Medium |
 
+Medium Complexity
+{: .label .label-yellow }
+$$$ Cost
+{: .label .label-yellow }
+Medium Parallelism
+{: .label .label-blue }
+
 ## When to Use
 - A bug is ambiguous and the root cause is unclear
 - Flaky or intermittent behavior defies simple reproduction
@@ -30,15 +37,21 @@ nav_order: 3
 ## How It Works
 Each investigator proposes a hypothesis and a test plan to validate or disprove it. Investigators are encouraged to actively disprove each other's theories, creating a structured debate. The lead acts as final arbiter, evaluating the evidence and declaring a consensus root cause or decision.
 
-```
-         ┌───────┐
-         │ Judge │     Final arbiter
-         └───┬───┘
-        ┌────┼────┐
-        ▼    ▼    ▼
-      ┌──┐ ┌──┐ ┌──┐
-      │H1│◄►│H2│◄►│H3│  Investigators debate
-      └──┘ └──┘ └──┘     and disprove each other
+```mermaid
+graph TD
+    Judge[Lead<br/>Judge / Arbiter]
+    H1[Hypothesis 1]
+    H2[Hypothesis 2]
+    H3[Hypothesis 3]
+    Judge -->|spawn| H1
+    Judge -->|spawn| H2
+    Judge -->|spawn| H3
+    H1 <-.->|debate| H2
+    H2 <-.->|debate| H3
+    H1 <-.->|debate| H3
+    H1 -.->|evidence| Judge
+    H2 -.->|evidence| Judge
+    H3 -.->|evidence| Judge
 ```
 
 1. **Lead** describes the symptom and spawns investigators

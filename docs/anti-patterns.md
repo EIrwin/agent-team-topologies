@@ -14,9 +14,11 @@ Eight failure modes that waste tokens, create conflicts, or produce garbage outp
 
 **What it looks like:** Two or more teammates are assigned tasks that require editing the same file. Both make changes. One overwrites the other, or merge conflicts arise.
 
-**Why it fails:** Claude Code teammates operate in isolated contexts. They have no awareness of each other's in-progress edits. There is no automatic merge -- the last write wins or conflicts block progress.
+{: .warning }
+> **Why it fails:** Claude Code teammates operate in isolated contexts. They have no awareness of each other's in-progress edits. There is no automatic merge -- the last write wins or conflicts block progress.
 
-**What to do instead:** Decompose tasks by file ownership. Each file should have exactly one owner. If two features touch the same file, either serialize them (task dependencies) or have one teammate own the file and accept changes via the task list.
+{: .tip }
+> **What to do instead:** Decompose tasks by file ownership. Each file should have exactly one owner. If two features touch the same file, either serialize them (task dependencies) or have one teammate own the file and accept changes via the task list.
 
 ---
 
@@ -45,9 +47,11 @@ Spawn a teammate to:
 4. Deliver: 10-bullet summary + key file paths
 ```
 
-**Why it fails:** Teammates start with zero conversation history. A vague prompt forces them to spend tokens exploring scope, guessing intent, and potentially doing irrelevant work. Anthropic explicitly recommends focused spawn prompts.
+{: .warning }
+> **Why it fails:** Teammates start with zero conversation history. A vague prompt forces them to spend tokens exploring scope, guessing intent, and potentially doing irrelevant work. Anthropic explicitly recommends focused spawn prompts.
 
-**What to do instead:** Include in every spawn prompt: (1) specific deliverable, (2) scope boundaries, (3) relevant file paths or modules, (4) output format.
+{: .tip }
+> **What to do instead:** Include in every spawn prompt: (1) specific deliverable, (2) scope boundaries, (3) relevant file paths or modules, (4) output format.
 
 ---
 
@@ -65,9 +69,11 @@ Spawn a teammate to:
 
 **What it looks like:** The lead sends every status update, question, or finding as a broadcast to all teammates instead of direct messages to the relevant one.
 
-**Why it fails:** Each broadcast sends a separate message to every teammate. With N teammates, that's N message deliveries -- each one consuming tokens in the recipient's context window. Most broadcasts are irrelevant to most recipients.
+{: .warning }
+> **Why it fails:** Each broadcast sends a separate message to every teammate. With N teammates, that's N message deliveries -- each one consuming tokens in the recipient's context window. Most broadcasts are irrelevant to most recipients.
 
-**What to do instead:** Default to direct messages (`type: "message"` with a specific `recipient`). Reserve broadcasts for genuinely team-wide information: blocking issues, major scope changes, or shutdown announcements.
+{: .tip }
+> **What to do instead:** Default to direct messages (`type: "message"` with a specific `recipient`). Reserve broadcasts for genuinely team-wide information: blocking issues, major scope changes, or shutdown announcements.
 
 ---
 
@@ -107,9 +113,11 @@ All tests must pass. Coverage for src/auth/ must reach 80%.
 
 **What it looks like:** The lead has a long conversation establishing requirements, debugging an issue, or refining an approach. Then spawns a teammate with "fix the bug we discussed" or "implement the feature."
 
-**Why it fails:** Teammates start with a blank context window. They get `CLAUDE.md`, MCP servers, and their spawn prompt -- nothing else. "The bug we discussed" is meaningless to them.
+{: .warning }
+> **Why it fails:** Teammates start with a blank context window. They get `CLAUDE.md`, MCP servers, and their spawn prompt -- nothing else. "The bug we discussed" is meaningless to them.
 
-**What to do instead:** Treat spawn prompts as self-contained briefs. Include:
+{: .tip }
+> **What to do instead:** Treat spawn prompts as self-contained briefs. Include:
 - What the problem/goal is
 - Relevant file paths and line numbers
 - Constraints and decisions already made

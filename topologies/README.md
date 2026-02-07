@@ -24,3 +24,13 @@ Pick the topology that matches your work shape, then use the spawn prompt inside
 | [Orchestrator-Only](orchestrator-only/) | Pure coordination, lead never codes | 3-6 | $$$$ | High |
 | [Quality-Gated](quality-gated/) | Enforcing completion standards | Any | +$ | Varies |
 | [Task Queue](task-queue/) | Many small independent tasks | 4-9 | $$$$ | Very High |
+
+**Cost legend:**
+Low $$
+{: .label .label-green }
+Medium $$$
+{: .label .label-yellow }
+High $$$$
+{: .label .label-red }
+Additive +$
+{: .label .label-purple }

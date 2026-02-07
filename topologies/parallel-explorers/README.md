@@ -17,6 +17,13 @@ nav_order: 1
 | Complexity | Low |
 | Parallelism | High |
 
+Low Complexity
+{: .label .label-green }
+$$ Cost
+{: .label .label-yellow }
+High Parallelism
+{: .label .label-blue }
+
 ## When to Use
 - You need to understand an unfamiliar codebase quickly
 - You want to map architecture, data flows, or module boundaries
@@ -31,16 +38,18 @@ nav_order: 1
 ## How It Works
 Each explorer is assigned a distinct area or question to investigate. They work independently, scanning files and tracing flows within their assigned scope. Each reports structured findings back to the lead, who synthesizes everything into a coherent picture.
 
-```
-         ┌──────┐
-         │ Lead │
-         └──┬───┘
-        ┌───┼───┐
-        ▼   ▼   ▼
-      ┌───┬───┬───┐
-      │E1 │E2 │E3 │   Explorers fan out independently
-      └─┬─┴─┬─┴─┬─┘   Each reports findings back to Lead
-        └───┴───┘
+```mermaid
+graph TD
+    Lead[Lead<br/>Synthesizer]
+    E1[Explorer 1]
+    E2[Explorer 2]
+    E3[Explorer 3]
+    Lead -->|assign zone| E1
+    Lead -->|assign zone| E2
+    Lead -->|assign zone| E3
+    E1 -.->|findings| Lead
+    E2 -.->|findings| Lead
+    E3 -.->|findings| Lead
 ```
 
 1. **Lead** breaks the exploration into non-overlapping zones (by module, layer, or question)
