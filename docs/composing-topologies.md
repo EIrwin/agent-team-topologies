@@ -31,19 +31,19 @@ The recipes below show concrete examples of each.
 
 ```mermaid
 graph LR
-    subgraph Phase 1: Build
+    subgraph build["Phase 1: Build"]
         Lead1[Lead] --> FE[Frontend]
         Lead1 --> BE[Backend]
         Lead1 --> QA[QA]
     end
 
-    subgraph Phase 2: Review
+    subgraph review["Phase 2: Review"]
         Lead2[Lead] --> SecRev[Security<br/>Reviewer]
         Lead2 --> PerfRev[Performance<br/>Reviewer]
         Lead2 --> TestRev[Test<br/>Reviewer]
     end
 
-    Phase 1: Build -->|"integration complete"| Phase 2: Review
+    build -->|integration complete| review
 ```
 
 **Spawn prompt:**
@@ -78,13 +78,13 @@ Synthesize into a single review with must-fix vs nice-to-have.
 
 ```mermaid
 graph LR
-    subgraph Phase 1: Discover
+    subgraph discover["Phase 1: Discover"]
         Lead1[Lead] --> E1[Explorer:<br/>Data Flow]
         Lead1 --> E2[Explorer:<br/>Auth System]
         Lead1 --> E3[Explorer:<br/>Test Strategy]
     end
 
-    subgraph Phase 2: Debate
+    subgraph debate["Phase 2: Debate"]
         Lead2[Lead] --> H1[Hypothesis A]
         Lead2 --> H2[Hypothesis B]
         Lead2 --> H3[Hypothesis C]
@@ -92,7 +92,7 @@ graph LR
         H2 <-.->|debate| H3
     end
 
-    Phase 1: Discover -->|"synthesis report"| Phase 2: Debate
+    discover -->|synthesis report| debate
 ```
 
 **Spawn prompt:**
@@ -127,20 +127,20 @@ End with: consensus approach, trade-offs acknowledged, implementation outline.
 graph TD
     Lead[Orchestrator Lead<br/>Delegate Mode]
 
-    subgraph Workstream A
+    subgraph wsA["Workstream A"]
         WA[Worker A<br/>= Feature Pod Lead]
         WA --> FE_A[Frontend]
         WA --> BE_A[Backend]
     end
 
-    subgraph Workstream B
+    subgraph wsB["Workstream B"]
         WB[Worker B<br/>= Task Queue Lead]
         WB --> T1[Task 1]
         WB --> T2[Task 2]
         WB --> T3[Task 3]
     end
 
-    subgraph Workstream C
+    subgraph wsC["Workstream C"]
         WC[Worker C<br/>= Single Agent]
     end
 
@@ -182,7 +182,7 @@ Lead synthesizes cross-workstream dependencies and resolves blockers.
 
 ```mermaid
 graph LR
-    subgraph Phase 1: Investigate
+    subgraph investigate["Phase 1: Investigate"]
         Judge[Lead<br/>Judge] --> H1[Hypothesis 1]
         Judge --> H2[Hypothesis 2]
         Judge --> H3[Hypothesis 3]
@@ -190,7 +190,7 @@ graph LR
         H2 <-.->|debate| H3
     end
 
-    subgraph Phase 2: Fix Safely
+    subgraph fix["Phase 2: Fix Safely"]
         Approver[Lead<br/>Approver]
         Arch[Architect]
         Impl[Implementer]
@@ -200,7 +200,7 @@ graph LR
         Impl -->|done| Rev
     end
 
-    Phase 1: Investigate -->|"root cause + fix plan"| Phase 2: Fix Safely
+    investigate -->|root cause + fix plan| fix
 ```
 
 **Spawn prompt:**
