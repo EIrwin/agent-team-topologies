@@ -39,25 +39,9 @@ Use this tree to pick the right agent team topology for your task.
 ### Any topology + quality enforcement
 
 {: .note }
-> Need enforced "Definition of Done" criteria? Overlay [Quality-Gated](../topologies/quality-gated/) on top of any topology above.
+> [Quality-Gated](../topologies/quality-gated/) is not a standalone topology — it layers on top of any other pattern. Apply it when you need enforced "Definition of Done" criteria.
 
-## Pattern G: Quality-Gated Delivery (composable overlay)
-
-{: .important }
-> Pattern G is not a standalone topology -- it layers on top of any other pattern. Apply it when you need enforced "Definition of Done" criteria.
-
-```mermaid
-graph LR
-    Any[Any Topology<br/>A through F, or H]
-    QG{Quality gates<br/>needed?}
-    TC[TaskCompleted hook<br/>blocks until criteria pass]
-    TI[TeammateIdle hook<br/>triggers action on idle]
-    Any --> QG
-    QG --> TC
-    QG --> TI
-```
-
-**When to overlay Pattern G:**
+**When to overlay Quality-Gated:**
 - Teammates tend to mark tasks "done" prematurely
 - You need automated checks before accepting work
 - The cost of rework exceeds the cost of the gate
@@ -77,7 +61,7 @@ graph LR
 }
 ```
 
-## Decision factors at each node
+## Decision factors
 
 ### Independence test
 The most important filter. If tasks require constant back-and-forth or touch the same files, agent teams create more problems than they solve. Restructure the decomposition until workers can operate independently.
@@ -86,7 +70,7 @@ The most important filter. If tasks require constant back-and-forth or touch the
 Large codebases, verbose logs, and multi-module exploration can exhaust a single context window. Agent teams give each worker its own full context. Subagents are cheaper but return only summaries.
 
 ### Risk level
-High-risk changes (security, data migrations, core architecture) benefit from independent review and plan-before-execute workflows. Pattern E (Risky Refactor) enforces plan approval before any code changes happen.
+High-risk changes (security, data migrations, core architecture) benefit from independent review and plan-before-execute workflows. [Risky Refactor](../topologies/risky-refactor/) enforces plan approval before any code changes happen.
 
 ## Common combinations
 
@@ -94,8 +78,8 @@ These combinations are examples of **topology composition** -- chaining or nesti
 
 | Scenario | Primary | Overlay |
 |---|---|---|
-| Ship a full-stack feature with quality checks | D (Feature Pod) | + G (Quality-Gated) |
-| Investigate a production bug then fix it | C (Hypotheses) then D (Pod) | + G |
-| Review a large PR from multiple angles | B (Review Board) | -- |
-| Process 50 small migration tasks | H (Task Queue) | + G |
-| Explore unfamiliar codebase before planning | A (Explorers) | -- |
+| Ship a full-stack feature with quality checks | Feature Pod | + Quality-Gated |
+| Investigate a production bug then fix it | Competing Hypotheses → Feature Pod | + Quality-Gated |
+| Review a large PR from multiple angles | Review Board | — |
+| Process 50 small migration tasks | Task Queue | + Quality-Gated |
+| Explore unfamiliar codebase before planning | Parallel Explorers | — |
