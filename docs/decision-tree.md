@@ -8,58 +8,38 @@ nav_order: 2
 
 Use this tree to pick the right agent team topology for your task.
 
-## The tree
+## Start here: What are you trying to do?
 
-```mermaid
-flowchart TD
-    Start{What are you<br/>trying to do?}
+### Understand — explore, investigate, map
 
-    Understand[UNDERSTAND<br/>explore, investigate, map]
-    Build[BUILD<br/>implement, deliver]
-    Review[REVIEW<br/>audit, critique, validate]
-    Change[CHANGE something risky<br/>refactor, migrate, security]
+{: .highlight }
+> - Multiple independent questions? → [Parallel Explorers](../topologies/parallel-explorers/)
+> - Ambiguous bug or unclear root cause? → [Competing Hypotheses](../topologies/competing-hypotheses/)
+> - One focused question? → Single subagent (no team needed)
 
-    Start --> Understand
-    Start --> Build
-    Start --> Review
-    Start --> Change
+### Build — implement, deliver
 
-    Q1{One focused<br/>question?}
-    Q2{Multiple independent<br/>questions?}
-    Q3{Ambiguous bug?}
+{: .highlight }
+> - Work splits by layer/component into different files? → [Feature Pod](../topologies/feature-pod/)
+> - Large backlog of small independent items? → [Task Queue](../topologies/task-queue/)
+> - Lead should only coordinate, never code? → [Orchestrator-Only](../topologies/orchestrator-only/)
 
-    Understand --> Q1
-    Understand --> Q2
-    Understand --> Q3
+### Review — audit, critique, validate
 
-    Q1 -->|yes| Sub1[Subagent<br/>burst lookup]
-    Q2 -->|yes| A[A: Parallel Explorers]
-    Q3 -->|yes| C[C: Competing Hypotheses]
+{: .highlight }
+> - Multiple review perspectives needed? → [Review Board](../topologies/review-board/)
+> - Single perspective? → Single subagent with a focused checklist (no team needed)
 
-    Q4{Split by<br/>layer/component?}
-    Q5{Large backlog of<br/>small items?}
-    Q6{Lead should only<br/>coordinate?}
+### Change something risky — refactor, migrate, security
 
-    Build --> Q4
-    Build --> Q5
-    Build --> Q6
+{: .highlight }
+> - Expensive to get wrong? → [Risky Refactor](../topologies/risky-refactor/)
+> - Standard risk? → Pick the topology that matches the work shape above
 
-    Q4 -->|yes, different files| D[D: Feature Pod]
-    Q5 -->|yes| H[H: Task Queue]
-    Q6 -->|yes| F[F: Orchestrator-Only]
+### Any topology + quality enforcement
 
-    Q7{Multiple review<br/>perspectives?}
-
-    Review --> Q7
-    Q7 -->|yes| B[B: Review Board]
-    Q7 -->|no| Sub2[Subagent with<br/>focused checklist]
-
-    Q8{Expensive to<br/>get wrong?}
-
-    Change --> Q8
-    Q8 -->|yes| E[E: Risky Refactor]
-    Q8 -->|no| Std[Standard topology<br/>for work shape]
-```
+{: .note }
+> Need enforced "Definition of Done" criteria? Overlay [Quality-Gated](../topologies/quality-gated/) on top of any topology above.
 
 ## Pattern G: Quality-Gated Delivery (composable overlay)
 

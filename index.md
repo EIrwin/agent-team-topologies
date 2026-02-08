@@ -23,40 +23,18 @@ nav_order: 1
 
 ## Pick Your Topology
 
-```mermaid
-flowchart TD
-    Start{What are you trying to do?}
+| Goal | Question | Topology |
+|------|----------|----------|
+| **Understand** | Multiple independent questions? | [Parallel Explorers](topologies/parallel-explorers/) |
+| | Ambiguous bug? | [Competing Hypotheses](topologies/competing-hypotheses/) |
+| **Build** | Multi-layer feature? | [Feature Pod](topologies/feature-pod/) |
+| | Many small tasks? | [Task Queue](topologies/task-queue/) |
+| | Pure coordination? | [Orchestrator-Only](topologies/orchestrator-only/) |
+| **Review** | Multiple lenses? | [Review Board](topologies/review-board/) |
+| **Risky change** | Expensive to get wrong? | [Risky Refactor](topologies/risky-refactor/) |
+| **Any of the above** | Need quality enforcement? | + [Quality-Gated](topologies/quality-gated/) overlay |
 
-    Understand[Understand / Research]
-    Build[Build / Implement]
-    Review[Review / Audit]
-    Risky[Risky Change]
-
-    Start --> Understand
-    Start --> Build
-    Start --> Review
-    Start --> Risky
-
-    Understand -->|multiple questions| A[Parallel Explorers]
-    Understand -->|ambiguous bug| C[Competing Hypotheses]
-
-    Build -->|multi-layer feature| D[Feature Pod]
-    Build -->|many small tasks| H[Task Queue]
-    Build -->|pure coordination| F[Orchestrator-Only]
-    Build -->|high risk| E[Risky Refactor]
-
-    Review -->|multiple lenses| B[Review Board]
-
-    Risky -->|expensive to get wrong| E
-
-    G[Quality-Gated]
-    G -.->|composable: add to any| Start
-
-    classDef topology fill:#1a73e8,color:#fff,stroke:#1565c0
-    classDef overlay fill:#7c4dff,color:#fff,stroke:#651fff
-    class A,B,C,D,E,F,H topology
-    class G overlay
-```
+[Full decision tree →](docs/decision-tree.md){: .btn .btn-outline .fs-4 }
 
 ---
 
